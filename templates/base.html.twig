@@ -1,12 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Media Player{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png')}}" />
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('styles/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('styles/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('styles/all.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('styles/dataTables.bootstrap4.min.css') }}">
+    {% endblock %}
+</head>
+<body>
+
+
+
+<main class="ml-4 mr-4">
+    {% block body %}{% endblock %}
+</main>
+
+
+{% block javascripts %}
+    <script src="{{ asset('js/jquery-3.4.1.slim.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/all.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+{% endblock %}
+</body>
 </html>
