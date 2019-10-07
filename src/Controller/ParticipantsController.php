@@ -22,6 +22,9 @@ class ParticipantsController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/participants/add", name="add_participants")
+     */
     public function addParticipants(Request $request,UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em){
         $participant = new Participants();
 
@@ -31,8 +34,6 @@ class ParticipantsController extends AbstractController
 
         if($formParticipant->isSubmitted() && $formParticipant->isValid()){
             $participant = $formParticipant->getData();
-
-
 
             $password = $passwordEncoder->encodePassword($participant, $participant->getPassword());
             $participant->setPassword($password);
@@ -60,11 +61,11 @@ class ParticipantsController extends AbstractController
 
             $em->persist($participant);
             $em->flush();
-            $this->addFlash('success','User successfully added');
+            $this->addFlash('success','Participants successfully added');
             return $this->redirectToRoute('main');
         }
 
-        return $this->render('participants/security_registration.html.twig',[
+        return $this->render('participants/add_participants.html.twig',[
             'page_name' => 'Registration',
             'formParticipant'=>$formParticipant->createView(),
         ]);
