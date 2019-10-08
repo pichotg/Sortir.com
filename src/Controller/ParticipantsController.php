@@ -9,16 +9,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ParticipantsController extends AbstractController
 {
     /**
-     * @Route("/participants", name="participants")
+     * @Route("/connexion", name="security_login")
      */
-    public function index()
+    public function index(AuthenticationUtils $authenticationUtils)
     {
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
         return $this->render('participants/index.html.twig', [
-            'controller_name' => 'ParticipantsController',
+            'page_name' => 'Login',
+            'last_username'=>$lastUsername,
+            'error'=>$error
         ]);
     }
 

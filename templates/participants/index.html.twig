@@ -1,20 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ParticipantsController!{% endblock %}
+{% block title %}{{ parent() }} | {{ page_name }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="jumbotron mt-2">
+        <h1 class="text-center display-4 lead">{{ page_name }}</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <form method="post" action="{{ path('security_login') }}">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/Sortir.com/src/Controller/ParticipantsController.php'|file_link(0) }}">src/Controller/ParticipantsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/Sortir.com/templates/participants/index.html.twig'|file_link(0) }}">templates/participants/index.html.twig</a></code></li>
-    </ul>
-</div>
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input type="text" class="form-control" id="_username" name="_username" placeholder="Enter Username" value="{{ last_username }}">
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="_password" name="_password" placeholder="Password" value="">
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="_remember_me" checked>
+                <label class="form-check-label" for="remember_me">Remember me</label>
+            </div>
+
+            <div class="form-group">
+                <a href="{{ path('add_participants') }}">You are new ? Go to the registration</a>
+            </div>
+
+            <div class="form-group">
+                <a href="">You have forget your password ? Click Here</a>
+            </div>
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <button type="submit" class="btn btn-primary">Login</button>
+
+        </form>
+    </div>
+
 {% endblock %}
