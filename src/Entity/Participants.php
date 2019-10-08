@@ -65,11 +65,9 @@ class Participants implements UserInterface
     private $motDePasse;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="administrateur", type="boolean", nullable=false)
+     * @ORM\Column(type="json")
      */
-    private $administrateur;
+    private $roles = [];
 
     /**
      * @var bool
@@ -118,24 +116,6 @@ class Participants implements UserInterface
         $this->photo = $photo;
     }
 
-    /**
-     * Returns the roles granted to the user.
-     *
-     *     public function getRoles()
-     *     {
-     *         return ['ROLE_USER'];
-     *     }
-     *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
-     *
-     * @return (Role|string)[] The user roles
-     */
-    public function getRoles()
-    {
-        // TODO: Implement getRoles() method.
-    }
 
     /**
      * Returns the password used to authenticate the user.
@@ -188,7 +168,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getPseudo(): ?string
+    public function getPseudo(): string
     {
         return $this->pseudo;
     }
@@ -204,7 +184,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getNom(): ?string
+    public function getNom(): string
     {
         return $this->nom;
     }
@@ -220,7 +200,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getPrenom(): ?string
+    public function getPrenom(): string
     {
         return $this->prenom;
     }
@@ -252,7 +232,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getMail(): ?string
+    public function getMail(): string
     {
         return $this->mail;
     }
@@ -268,7 +248,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getMotDePasse(): ?string
+    public function getMotDePasse(): string
     {
         return $this->motDePasse;
     }
@@ -282,25 +262,25 @@ class Participants implements UserInterface
     }
 
     /**
-     * @return bool
+     * @see UserInterface
      */
-    public function isAdministrateur(): ?bool
+    public function getRoles(): array
     {
-        return $this->administrateur;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+        return $this;
     }
 
     /**
-     * @param bool $administrateur
-     */
-    public function setAdministrateur(bool $administrateur): void
-    {
-        $this->administrateur = $administrateur;
-    }
-
-    /**
      * @return bool
      */
-    public function isActif(): ?bool
+    public function isActif(): bool
     {
         return $this->actif;
     }

@@ -29,6 +29,14 @@ class ParticipantsController extends AbstractController
     }
 
     /**
+     * @Route("/deconnexion", name="security_logout")
+     */
+    public function logout()
+    {
+
+    }
+
+    /**
      * @Route("/participants/add", name="add_participants")
      */
     public function addParticipants(Request $request,UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em){
