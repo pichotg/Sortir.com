@@ -64,15 +64,9 @@ class Sorties
     private $descriptioninfos;
 
     /**
-     * @var string|null
+     * @var int
      *
-     * @ORM\Column(name="urlPhoto", type="string", length=250, nullable=true)
-     */
-    private $urlphoto;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etats", inversedBy="listSorties")
-     * @ORM\JoinColumn(name="Etats", referencedColumnName="id")
+     * @ORM\Column(name="etat", type="integer", nullable=false)
      */
     private $etatsortie;
 
