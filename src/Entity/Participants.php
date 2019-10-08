@@ -32,28 +32,28 @@ class Participants implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=30, nullable=false)
+     * @ORM\Column(name="nom", type="string", length=80, nullable=false)
      */
     private $nom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=30, nullable=false)
+     * @ORM\Column(name="prenom", type="string", length=80, nullable=false)
      */
     private $prenom;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="telephone", type="string", length=15, nullable=true)
+     * @ORM\Column(name="telephone", type="string", length=10, nullable=true)
      */
     private $telephone;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mail", type="string", length=20, nullable=false)
+     * @ORM\Column(name="mail", type="string", length=255, nullable=false)
      */
     private $mail;
 
@@ -168,7 +168,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getPseudo(): string
+    public function getPseudo(): ?string
     {
         return $this->pseudo;
     }
@@ -184,7 +184,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getNom(): string
+    public function getNom(): ?string
     {
         return $this->nom;
     }
@@ -200,7 +200,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getPrenom(): string
+    public function getPrenom(): ?string
     {
         return $this->prenom;
     }
@@ -232,7 +232,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getMail(): string
+    public function getMail(): ?string
     {
         return $this->mail;
     }
@@ -248,7 +248,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getMotDePasse(): string
+    public function getMotDePasse(): ?string
     {
         return $this->motDePasse;
     }

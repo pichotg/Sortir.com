@@ -47,11 +47,12 @@ class ParticipantsController extends AbstractController
         $formParticipant->handleRequest($request);
 
         if($formParticipant->isSubmitted() && $formParticipant->isValid()){
+            $participant = new Participants();
             $participant = $formParticipant->getData();
 
             $password = $passwordEncoder->encodePassword($participant, $participant->getPassword());
             $participant->setMotDePasse($password);
-            $participant->setAdministrateur(1);
+            $participant->setRoles(['ROLE_USER']);
             $participant->setActif(1);
 
             // set user profile photo
@@ -86,6 +87,17 @@ class ParticipantsController extends AbstractController
             'formParticipant'=>$formParticipant->createView(),
         ]);
 
+    }
+
+    /**
+     * @Route("/profil", name="profil")
+     */
+    public function profil(AuthenticationUtils $authenticationUtils)
+    {
+
+        return $this->render('participants/profil.html.twig', [
+            'page_name' => 'Profil'
+        ]);
     }
 
 }
