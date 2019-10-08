@@ -28,5 +28,12 @@ class Etats
      */
     private $libelle;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Lieux", mappedBy="etatsortie")
+     */
+    private $sorties;
+
+
+
 
 }

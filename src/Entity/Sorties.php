@@ -64,13 +64,6 @@ class Sorties
     private $descriptioninfos;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="etatsortie", type="integer", nullable=true)
-     */
-    private $etatsortie;
-
-    /**
      * @var string|null
      *
      * @ORM\Column(name="urlPhoto", type="string", length=250, nullable=true)
@@ -78,9 +71,14 @@ class Sorties
     private $urlphoto;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="organisateur", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etats", inversedBy="sorties")
+     * @ORM\JoinColumn(name="Etats", referencedColumnName="id")
+     */
+    private $etatsortie;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participants", inversedBy="")
+     * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
      */
     private $organisateur;
 
@@ -91,6 +89,17 @@ class Sorties
     private $lieu;
 
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="sorties")
+     * @ORM\JoinColumn(name="Campus", referencedColumnName="id")
+     */
+    private $campus;
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Participants", inversedBy="listSorties")
+     * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
+     */
+    private $listParticipants;
 
 }
