@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Sortir.com{% endblock %}</title>
+    <title>Sortir.com | {% block title %}{% endblock %}</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png')}}" />
     {% block stylesheets %}
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
@@ -14,10 +14,19 @@
 </head>
 <body>
 
+{% block header %}
+    {% include 'elements/navbar.html.twig' %}
+{% endblock %}
+
+{% include 'elements/alert.html.twig' %}
+
 <main class="ml-4 mr-4">
     {% block body %}{% endblock %}
 </main>
 
+{% block footer %}
+    {% include 'elements/footer.html.twig' %}
+{% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('js/jquery-3.4.1.slim.min.js') }}"></script>

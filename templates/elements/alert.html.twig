@@ -1,0 +1,10 @@
+{# Affichage des messages flash #}
+{% if app.request.hasPreviousSession %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
