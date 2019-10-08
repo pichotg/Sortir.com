@@ -4,6 +4,42 @@
 
 {% block body %}
 
+    <div class="card text-center">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Profil</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body row">
+            <div class="col-4">
+                {% if app.user.photo is not null %}
+                    <img class="img-profile-2 rounded-circle" src="{{ asset('files/photo/' ~ app.user.photo) }}" alt="{{ app.user.username }}">
+                {% else %}
+                    <i class="fas fa-user-circle fa-9x"></i>
+                {% endif %}
+                <h1>{{ app.user.nom }} {{ app.user.prenom }}</h1>
+                <p class="title">({{ app.user.pseudo }})</p>
+                <p>{{ app.user.mail }}</p>
+                {% if app.user.mail is not null %}
+                    <a href="#"><i class="fas fa-at"></i> {{ app.user.mail }}</a>
+                {% endif %}
+                {% if app.user.telephone is not null %}
+                    <a href="#"><i class="fas fa-phone"></i> {{ app.user.telephone }}</a>
+                {% endif %}
+            </div>
+            <div class="col-8">
+                <h1><i class="fas fa-university"></i> Campus</h1>
+                <div class="list-group">
+                    {% if app.user.campus is not null %}
 
+                    {% else %}
+                        <a class="list-group-item list-group-item-action" href="#">Pas de campus pour le momment</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

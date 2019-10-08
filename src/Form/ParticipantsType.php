@@ -54,7 +54,11 @@ class ParticipantsType extends AbstractType
                 ],
             ])
 
-            ->add('Send',SubmitType::class)
+            ->add('Soumettre',SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-success w-100'
+                ]
+            ])
         ;
     }
 
