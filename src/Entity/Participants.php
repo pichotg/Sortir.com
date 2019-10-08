@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Participants
  *
- * @ORM\Table(name="participants", uniqueConstraints={@ORM\UniqueConstraint(name="participants_pseudo_uk", columns={"pseudo"})})
+ * @ORM\Table(name="participants")
  * @ORM\Entity
  */
 class Participants implements UserInterface
@@ -16,11 +16,11 @@ class Participants implements UserInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="no_participant", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $noParticipant;
+    private $id;
 
     /**
      * @var string
@@ -28,22 +28,6 @@ class Participants implements UserInterface
      * @ORM\Column(name="pseudo", type="string", length=30, nullable=false)
      */
     private $pseudo;
-
-    /**
-     * @return int
-     */
-    public function getNoParticipant(): int
-    {
-        return $this->noParticipant;
-    }
-
-    /**
-     * @param int $noParticipant
-     */
-    public function setNoParticipant(int $noParticipant): void
-    {
-        $this->noParticipant = $noParticipant;
-    }
 
     /**
      * @var string
@@ -95,13 +79,6 @@ class Participants implements UserInterface
     private $actif;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="campus_no_campus", type="integer", nullable=false)
-     */
-    private $campusNoCampus;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $photo;
@@ -111,6 +88,19 @@ class Participants implements UserInterface
      * @ORM\JoinColumn(name="Campus", referencedColumnName="id")
      */
     private $campus;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Sorties")
+     * @ORM\JoinColumn(name="Sorties", referencedColumnName="id")
+     */
+    private $listSorties;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sorties", mappedBy="organisateur")
+     */
+    private $listOrganisateurSorties;
+
 
     /**
      * @return mixed

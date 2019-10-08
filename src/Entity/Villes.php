@@ -15,11 +15,11 @@ class Villes
     /**
      * @var int
      *
-     * @ORM\Column(name="no_ville", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $noVille;
+    private $id;
 
     /**
      * @var string
@@ -39,5 +39,54 @@ class Villes
      * @ORM\OneToMany(targetEntity="App\Entity\Lieux", mappedBy="ville")
      */
     private $lieux ;
+
+    /**
+     * @return string
+     */
+    public function getNomVille(): string
+    {
+        return $this->nomVille;
+    }
+
+    /**
+     * @param string $nomVille
+     */
+    public function setNomVille(string $nomVille): void
+    {
+        $this->nomVille = $nomVille;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCodePostal(): string
+    {
+        return $this->codePostal;
+    }
+
+    /**
+     * @param string $codePostal
+     */
+    public function setCodePostal(string $codePostal): void
+    {
+        $this->codePostal = $codePostal;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLieux()
+    {
+        return $this->lieux;
+    }
+
+    /**
+     * @param mixed $lieux
+     */
+    public function setLieux($lieux): void
+    {
+        $this->lieux = $lieux;
+    }
+
 
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Sorties
  *
- * @ORM\Table(name="sorties", indexes={@ORM\Index(name="sorties_lieux_fk", columns={"lieux_no_lieu"}), @ORM\Index(name="sorties_participants_fk", columns={"organisateur"}), @ORM\Index(name="sorties_etats_fk", columns={"etats_no_etat"})})
+ * @ORM\Table(name="sorties")
  * @ORM\Entity
  */
 class Sorties
@@ -15,11 +15,11 @@ class Sorties
     /**
      * @var int
      *
-     * @ORM\Column(name="no_sortie", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $noSortie;
+    private $id;
 
     /**
      * @var string
@@ -71,33 +71,33 @@ class Sorties
     private $urlphoto;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etats", inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etats", inversedBy="listSorties")
      * @ORM\JoinColumn(name="Etats", referencedColumnName="id")
      */
     private $etatsortie;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Participants", inversedBy="")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participants", inversedBy="listOrganisateurSorties")
      * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
      */
     private $organisateur;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Sorties", inversedBy="lieu")
-     * @ORM\JoinColumn(name="Sorties", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Lieux", inversedBy="listSorties")
+     * @ORM\JoinColumn(name="Lieux", referencedColumnName="id")
      */
     private $lieu;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="listSorties")
      * @ORM\JoinColumn(name="Campus", referencedColumnName="id")
      */
     private $campus;
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Participants", inversedBy="listSorties")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Participants")
      * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
      */
     private $listParticipants;

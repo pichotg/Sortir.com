@@ -15,11 +15,11 @@ class Etats
     /**
      * @var int
      *
-     * @ORM\Column(name="no_etat", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $noEtat;
+    private $id;
 
     /**
      * @var string
@@ -29,9 +29,9 @@ class Etats
     private $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Lieux", mappedBy="etatsortie")
+     * @ORM\OneToMany(targetEntity="App\Entity\Sorties", mappedBy="etatsortie")
      */
-    private $sorties;
+    private $listSorties;
 
 
 

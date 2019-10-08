@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Inscriptions
  *
- * @ORM\Table(name="inscriptions", indexes={@ORM\Index(name="inscriptions_participants_fk", columns={"participants_no_participant"})})
+ * @ORM\Table(name="inscriptions")
  * @ORM\Entity
  */
 class Inscriptions
@@ -15,11 +15,11 @@ class Inscriptions
     /**
      * @var int
      *
-     * @ORM\Column(name="sorties_no_sortie", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $sortiesNoSortie;
+    private $id;
 
     /**
      * @var int

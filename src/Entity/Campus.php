@@ -15,11 +15,11 @@ class Campus
     /**
      * @var int
      *
-     * @ORM\Column(name="no_campus", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $noCampus;
+    private $id;
 
     /**
      * @var string
@@ -33,6 +33,12 @@ class Campus
      * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
      */
     private $listParticipants;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sorties", mappedBy="campus")
+     * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
+     */
+    private $listSorties;
 
 
 }

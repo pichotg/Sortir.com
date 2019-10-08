@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VillesController extends AbstractController
 {
     private $villesListe = null;
+
     /**
      * @Route("/villes", name="villes")
      */
@@ -35,8 +36,9 @@ class VillesController extends AbstractController
         $form = $this->createForm(VillesType::class, $ville);
         $form -> handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $genre = $form->getData();
-            $em->persist($genre);
+
+            $ville = $form->getData();
+            $em->persist($ville);
             $em->flush();
             $this->addFlash('success', 'Villes successfully added !');
             return $this->redirectToRoute('villes');
@@ -67,7 +69,7 @@ class VillesController extends AbstractController
             return $this->redirectToRoute('villes');
         }
 
-        return $this->render('genre/genre_edit.html.twig', [
+        return $this->render('ville/edit.html.twig', [
             'page_name' => 'Ville Edit',
             'ville' => $ville,
             'form' => $form->createView()
