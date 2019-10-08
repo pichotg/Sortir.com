@@ -22,7 +22,7 @@ class ParticipantsController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('participants/login.html.twig', [
-            'page_name' => 'Login',
+            'page_name' => 'Connexion',
             'last_username'=>$lastUsername,
             'error'=>$error
         ]);
@@ -83,7 +83,7 @@ class ParticipantsController extends AbstractController
         }
 
         return $this->render('participants/add_participants.html.twig',[
-            'page_name' => 'Registration',
+            'page_name' => 'Inscription',
             'formParticipant'=>$formParticipant->createView(),
         ]);
 
