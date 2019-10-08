@@ -102,4 +102,215 @@ class Sorties
      */
     private $listParticipants;
 
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNom(): string
+    {
+        return $this->nom;
+    }
+
+    /**
+     * @param string $nom
+     */
+    public function setNom(string $nom): void
+    {
+        $this->nom = $nom;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDatedebut(): \DateTime
+    {
+        return $this->datedebut;
+    }
+
+    /**
+     * @param \DateTime $datedebut
+     */
+    public function setDatedebut(\DateTime $datedebut): void
+    {
+        $this->datedebut = $datedebut;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDuree(): ?int
+    {
+        return $this->duree;
+    }
+
+    /**
+     * @param int|null $duree
+     */
+    public function setDuree(?int $duree): void
+    {
+        $this->duree = $duree;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDatecloture(): \DateTime
+    {
+        return $this->datecloture;
+    }
+
+    /**
+     * @param \DateTime $datecloture
+     */
+    public function setDatecloture(\DateTime $datecloture): void
+    {
+        $this->datecloture = $datecloture;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNbinscriptionsmax(): int
+    {
+        return $this->nbinscriptionsmax;
+    }
+
+    /**
+     * @param int $nbinscriptionsmax
+     */
+    public function setNbinscriptionsmax(int $nbinscriptionsmax): void
+    {
+        $this->nbinscriptionsmax = $nbinscriptionsmax;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescriptioninfos(): ?string
+    {
+        return $this->descriptioninfos;
+    }
+
+    /**
+     * @param string|null $descriptioninfos
+     */
+    public function setDescriptioninfos(?string $descriptioninfos): void
+    {
+        $this->descriptioninfos = $descriptioninfos;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUrlphoto(): ?string
+    {
+        return $this->urlphoto;
+    }
+
+    /**
+     * @param string|null $urlphoto
+     */
+    public function setUrlphoto(?string $urlphoto): void
+    {
+        $this->urlphoto = $urlphoto;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEtatsortie()
+    {
+        return $this->etatsortie;
+    }
+
+    /**
+     * @param mixed $etatsortie
+     */
+    public function setEtatsortie($etatsortie): void
+    {
+        $this->etatsortie = $etatsortie;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrganisateur()
+    {
+        return $this->organisateur;
+    }
+
+    /**
+     * @param mixed $organisateur
+     */
+    public function setOrganisateur($organisateur): void
+    {
+        $this->organisateur = $organisateur;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLieu()
+    {
+        return $this->lieu;
+    }
+
+    /**
+     * @param mixed $lieu
+     */
+    public function setLieu($lieu): void
+    {
+        $this->lieu = $lieu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCampus()
+    {
+        return $this->campus;
+    }
+
+    /**
+     * @param mixed $campus
+     */
+    public function setCampus($campus): void
+    {
+        $this->campus = $campus;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getListParticipants()
+    {
+        return $this->listParticipants;
+    }
+
+    /**
+     * @param mixed $listParticipants
+     */
+    public function setListParticipants($listParticipants): void
+    {
+        $this->listParticipants = $listParticipants;
+    }
+
+
+
+
 }
