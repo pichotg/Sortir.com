@@ -26,7 +26,6 @@ class SortiesType extends AbstractType
             ->add('datecloture',DateType::class)
             ->add('nbinscriptionsmax',IntegerType::class)
             ->add('descriptioninfos',TextType::class)
-            ->add('urlphoto',TextType::class)
             ->add('lieu',EntityType::class, [
                 'class' => Lieux::class,
                 'choice_label' => 'nom_lieu',

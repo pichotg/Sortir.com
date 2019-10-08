@@ -208,37 +208,6 @@ class Sorties
         $this->descriptioninfos = $descriptioninfos;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getUrlphoto(): ?string
-    {
-        return $this->urlphoto;
-    }
-
-    /**
-     * @param string|null $urlphoto
-     */
-    public function setUrlphoto(?string $urlphoto): void
-    {
-        $this->urlphoto = $urlphoto;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEtatsortie()
-    {
-        return $this->etatsortie;
-    }
-
-    /**
-     * @param mixed $etatsortie
-     */
-    public function setEtatsortie($etatsortie): void
-    {
-        $this->etatsortie = $etatsortie;
-    }
 
     /**
      * @return mixed
@@ -303,6 +272,23 @@ class Sorties
     {
         $this->listParticipants = $listParticipants;
     }
+
+    /**
+     * @return int
+     */
+    public function getEtatsortie(): ?int
+    {
+        return $this->etatsortie;
+    }
+
+    /**
+     * @param int $etatsortie
+     */
+    public function setEtatsortie(int $etatsortie): void
+    {
+        $this->etatsortie = $etatsortie;
+    }
+
 
 
 
