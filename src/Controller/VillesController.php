@@ -35,6 +35,7 @@ class VillesController extends AbstractController
         $ville = new Villes();
         $form = $this->createForm(VillesType::class, $ville);
         $form -> handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $ville = $form->getData();

@@ -71,6 +71,4 @@ class Campus
      * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
      */
     private $listSorties;
-
-
 }

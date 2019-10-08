@@ -314,22 +314,6 @@ class Participants implements UserInterface
     }
 
     /**
-     * @return int
-     */
-    public function getCampusNoCampus(): int
-    {
-        return $this->campusNoCampus;
-    }
-
-    /**
-     * @param int $campusNoCampus
-     */
-    public function setCampusNoCampus(int $campusNoCampus): void
-    {
-        $this->campusNoCampus = $campusNoCampus;
-    }
-
-    /**
      * @return mixed
      */
     public function getCampus()
@@ -344,7 +328,5 @@ class Participants implements UserInterface
     {
         $this->campus = $campus;
     }
-
-
 
 }
