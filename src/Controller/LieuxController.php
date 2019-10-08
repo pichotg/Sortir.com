@@ -14,7 +14,7 @@ class LieuxController extends AbstractController
     private $lieuxListe = null;
 
     /**
-     * @Route("/Lieux", name="lieux")
+     * @Route("/lieux", name="lieux")
      */
     public function list(Request $request, EntityManagerInterface $em)
     {
@@ -78,7 +78,7 @@ class LieuxController extends AbstractController
     }
 
     /**
-     * @Route("/genre/delete/{id}", name="delete_genre" , requirements={"id"="\d+"})
+     * @Route("/lieu/delete/{id}", name="delete_lieu" , requirements={"id"="\d+"})
      */
     public function delete(Lieux $lieu, Request $request, EntityManagerInterface $em)
     {

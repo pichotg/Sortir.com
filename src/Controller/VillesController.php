@@ -78,7 +78,7 @@ class VillesController extends AbstractController
     }
 
     /**
-     * @Route("/genre/delete/{id}", name="delete_genre" , requirements={"id"="\d+"})
+     * @Route("/ville/delete/{id}", name="delete_ville" , requirements={"id"="\d+"})
      */
     public function delete(Villes $ville, Request $request, EntityManagerInterface $em)
     {

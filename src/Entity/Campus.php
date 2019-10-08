@@ -47,7 +47,7 @@ class Campus
     /**
      * @return string
      */
-    public function getNomCampus(): string
+    public function getNomCampus(): ?string
     {
         return $this->nomCampus;
     }
