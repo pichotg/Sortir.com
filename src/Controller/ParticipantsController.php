@@ -21,7 +21,7 @@ class ParticipantsController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('participants/index.html.twig', [
+        return $this->render('participants/login.html.twig', [
             'page_name' => 'Login',
             'last_username'=>$lastUsername,
             'error'=>$error
