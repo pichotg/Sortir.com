@@ -85,18 +85,12 @@ class Sorties
     private $organisateur;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="lieux_no_lieu", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sorties", inversedBy="lieu")
+     * @ORM\JoinColumn(name="Sorties", referencedColumnName="id")
      */
-    private $lieuxNoLieu;
+    private $lieu;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="etats_no_etat", type="integer", nullable=false)
-     */
-    private $etatsNoEtat;
+
 
 
 }

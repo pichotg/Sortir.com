@@ -35,5 +35,9 @@ class Villes
      */
     private $codePostal;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Lieux", mappedBy="ville")
+     */
+    private $lieux ;
 
 }

@@ -50,11 +50,15 @@ class Lieux
     private $longitude;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="villes_no_ville", type="integer", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Villes", inversedBy="lieux")
+     * @ORM\JoinColumn(name="Villes", referencedColumnName="id")
      */
-    private $villesNoVille;
+    private $ville;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Lieux", mappedBy="lieu")
+     */
+    private $sorties;
 
 
 }
