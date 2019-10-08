@@ -29,6 +29,38 @@ class Campus
     private $nomCampus;
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNomCampus(): string
+    {
+        return $this->nomCampus;
+    }
+
+    /**
+     * @param string $nomCampus
+     */
+    public function setNomCampus(string $nomCampus): void
+    {
+        $this->nomCampus = $nomCampus;
+    }
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Participants", mappedBy="campus")
      * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
      */

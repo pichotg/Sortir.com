@@ -26,11 +26,11 @@ class ParticipantsType extends AbstractType
             ->add('telephone', TextType::class)
             ->add('mail', TextType::class)
 
-            ->add('campusNoCampus', EntityType::class, [
+            ->add('campus', EntityType::class, [
                 'class' => Campus::class,
-                'choice_label' => 'nomCampus',
+                'choice_label' => 'nom_campus',
                 'query_builder' => function(EntityRepository $repository) {
-                    return $repository->createQueryBuilder('c')->orderBy('c.name', 'ASC');
+                    return $repository->createQueryBuilder('c')->orderBy('c.nomCampus', 'ASC');
                 }
             ])
             ->add('motDePasse', PasswordType::class)
