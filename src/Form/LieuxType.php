@@ -20,12 +20,12 @@ class LieuxType extends AbstractType
             ->add('nomLieu', TextType::class)
             ->add('rue', TextType::class)
             ->add('latitude', TextType::class)
-            ->add('longitude', TextType::class)
+                ->add('longitude', TextType::class)
             ->add('ville', EntityType::class, [
                 'class' => Villes::class,
                 'choice_label' => 'nomVille',
                 'query_builder' => function(EntityRepository $repository) {
-                    return $repository->createQueryBuilder('c')->orderBy('c.name', 'ASC');
+                    return $repository->createQueryBuilder('c')->orderBy('c.nomVille', 'ASC');
                 }
             ])
             ->add('Send',SubmitType::class)

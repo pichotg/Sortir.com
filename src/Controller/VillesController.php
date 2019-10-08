@@ -37,13 +37,13 @@ class VillesController extends AbstractController
         $form -> handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $ville = $form->getData();
             $em->persist($ville);
             $em->flush();
             $this->addFlash('success', 'Villes successfully added !');
             return $this->redirectToRoute('villes');
         }
+
         return $this->render('villes/add.html.twig', [
             'page_name' => 'Ville Add',
             'form' => $form->createView()
@@ -55,11 +55,11 @@ class VillesController extends AbstractController
      */
     public function edit(Villes $ville, Request $request, EntityManagerInterface $em)
     {
-        $form = $this->createForm(VillesType::classType, $ville);
+        $form = $this->createForm(VillesType::class, $ville);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $genre = $form->getData();
+            $ville = $form->getData();
 
             $em->persist($ville);
             $em->flush();
@@ -70,7 +70,7 @@ class VillesController extends AbstractController
             return $this->redirectToRoute('villes');
         }
 
-        return $this->render('ville/edit.html.twig', [
+        return $this->render('villes/edit.html.twig', [
             'page_name' => 'Ville Edit',
             'ville' => $ville,
             'form' => $form->createView()

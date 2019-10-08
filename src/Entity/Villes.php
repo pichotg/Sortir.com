@@ -43,7 +43,7 @@ class Villes
     /**
      * @return string
      */
-    public function getNomVille(): string
+    public function getNomVille(): ?string
     {
         return $this->nomVille;
     }
@@ -59,9 +59,25 @@ class Villes
     /**
      * @return string
      */
-    public function getCodePostal(): string
+    public function getCodePostal(): ?string
     {
         return $this->codePostal;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     /**

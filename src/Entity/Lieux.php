@@ -61,5 +61,103 @@ class Lieux
      */
     private $listSorties;
 
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNomLieu(): ?string
+    {
+        return $this->nomLieu;
+    }
+
+    /**
+     * @param string $nomLieu
+     */
+    public function setNomLieu(string $nomLieu): void
+    {
+        $this->nomLieu = $nomLieu;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRue(): ?string
+    {
+        return $this->rue;
+    }
+
+    /**
+     * @param string|null $rue
+     */
+    public function setRue(?string $rue): void
+    {
+        $this->rue = $rue;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * @param float|null $latitude
+     */
+    public function setLatitude(?float $latitude): void
+    {
+        $this->latitude = $latitude;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * @param float|null $longitude
+     */
+    public function setLongitude(?float $longitude): void
+    {
+        $this->longitude = $longitude;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVille()
+    {
+        return $this->ville;
+    }
+
+    /**
+     * @param mixed $ville
+     */
+    public function setVille($ville): void
+    {
+        $this->ville = $ville;
+    }
+
+
+
 
 }
