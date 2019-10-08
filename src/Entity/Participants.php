@@ -90,6 +90,12 @@ class Participants
     private $photo;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="listParticipants")
+     * @ORM\JoinColumn(name="Campus", referencedColumnName="id")
+     */
+    private $campus;
+
+    /**
      * @return mixed
      */
     public function getPhoto()

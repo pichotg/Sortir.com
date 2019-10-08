@@ -28,5 +28,11 @@ class Campus
      */
     private $nomCampus;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Participants", mappedBy="campus")
+     * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
+     */
+    private $listParticipants;
+
 
 }
