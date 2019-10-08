@@ -60,7 +60,7 @@ class Participants implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="mot_de_passe", type="string", length=20, nullable=false)
+     * @ORM\Column(name="mot_de_passe", type="string", length=255, nullable=false)
      */
     private $motDePasse;
 
@@ -188,7 +188,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getPseudo(): string
+    public function getPseudo(): ?string
     {
         return $this->pseudo;
     }
@@ -204,7 +204,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getNom(): string
+    public function getNom(): ?string
     {
         return $this->nom;
     }
@@ -220,7 +220,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getPrenom(): string
+    public function getPrenom(): ?string
     {
         return $this->prenom;
     }
@@ -252,7 +252,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getMail(): string
+    public function getMail(): ?string
     {
         return $this->mail;
     }
@@ -268,7 +268,7 @@ class Participants implements UserInterface
     /**
      * @return string
      */
-    public function getMotDePasse(): string
+    public function getMotDePasse(): ?string
     {
         return $this->motDePasse;
     }
@@ -284,7 +284,7 @@ class Participants implements UserInterface
     /**
      * @return bool
      */
-    public function isAdministrateur(): bool
+    public function isAdministrateur(): ?bool
     {
         return $this->administrateur;
     }
@@ -300,7 +300,7 @@ class Participants implements UserInterface
     /**
      * @return bool
      */
-    public function isActif(): bool
+    public function isActif(): ?bool
     {
         return $this->actif;
     }

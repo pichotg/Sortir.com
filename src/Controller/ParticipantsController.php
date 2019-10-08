@@ -42,7 +42,9 @@ class ParticipantsController extends AbstractController
             $participant = $formParticipant->getData();
 
             $password = $passwordEncoder->encodePassword($participant, $participant->getPassword());
-            $participant->setPassword($password);
+            $participant->setMotDePasse($password);
+            $participant->setAdministrateur(1);
+            $participant->setActif(1);
 
             // set user profile photo
             $filePhoto = $formParticipant['photo']->getData();
@@ -68,7 +70,7 @@ class ParticipantsController extends AbstractController
             $em->persist($participant);
             $em->flush();
             $this->addFlash('success','Participants successfully added');
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('participants/add_participants.html.twig',[
