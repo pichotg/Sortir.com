@@ -21,6 +21,10 @@
 .idea
 ###< PHPStorm ###
 
+###> docker ###
+.docker/data/*
+###< docker ###
+
 symfony.lock
 composer.lock
 /public/.htaccess
