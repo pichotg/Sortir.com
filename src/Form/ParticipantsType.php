@@ -25,7 +25,6 @@ class ParticipantsType extends AbstractType
             ->add('prenom', TextType::class)
             ->add('telephone', TextType::class)
             ->add('mail', TextType::class)
-
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
                 'choice_label' => 'nom_campus',
@@ -34,7 +33,6 @@ class ParticipantsType extends AbstractType
                 }
             ])
             ->add('motDePasse', PasswordType::class)
-
             ->add('photo', FileType::class, [
                 'label' => 'Photo Image file (jpg, jpeg, png, gif)',
                 'mapped' => false,
@@ -53,7 +51,6 @@ class ParticipantsType extends AbstractType
                     ])
                 ],
             ])
-
             ->add('Soumettre',SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-success w-100'

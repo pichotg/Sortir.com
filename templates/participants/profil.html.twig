@@ -33,9 +33,9 @@
                 <h1><i class="fas fa-university"></i> Campus</h1>
                 <div class="list-group">
                     {% if app.user.campus is not null %}
-
+                        <a class="list-group-item list-group-item-action" href="#">{{ app.user.campus.nomCampus }}</a>
                     {% else %}
-                        <a class="list-group-item list-group-item-action" href="#">Pas de campus pour le momment</a>
+                        <a class="list-group-item list-group-item-action" href="#">Pas de campus pour le moment</a>
                     {% endif %}
                 </div>
             </div>

@@ -64,9 +64,9 @@ class Sorties
     private $descriptioninfos;
 
     /**
-     * @var int
+     * @var String
      *
-     * @ORM\Column(name="etat", type="integer", nullable=false)
+     * @ORM\Column(name="etat", type="integer", nullable=false, columnDefinition="enum('En création', 'En cours', 'Ouvert', 'Fermé')")
      */
     private $etatsortie;
 
@@ -274,17 +274,17 @@ class Sorties
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getEtatsortie(): ?int
+    public function getEtatsortie(): ?string
     {
         return $this->etatsortie;
     }
 
     /**
-     * @param int $etatsortie
+     * @param string $etatsortie
      */
-    public function setEtatsortie(int $etatsortie): void
+    public function setEtatsortie(string $etatsortie): void
     {
         $this->etatsortie = $etatsortie;
     }
