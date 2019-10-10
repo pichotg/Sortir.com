@@ -2,12 +2,12 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Sorties;
 use App\Form\SortiesType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SortiesController extends AbstractController
 {
@@ -23,6 +23,28 @@ class SortiesController extends AbstractController
             'controller_name' => 'SortiesController',
             'sorties' => $this->sortiesListe,
             'page_name' => "Sorties"
+        ]);
+    }
+
+    /**
+     * @Route("/sorties/add", name="sortie_add")     *
+     */
+    public function add(Request $request, EntityManagerInterface $em)
+    {
+        $sortie = new Sorties();
+        $form = $this->createForm(SortiesType::class, $sortie);
+        $form -> handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sortie = $form->getData();
+            $em->persist($sortie);
+            $em->flush();
+            $this->addFlash('success', 'Sortie successfully added !');
+            return $this->redirectToRoute('sorties');
+        }
+
+        return $this->render('sorties/add.html.twig', [
+            'page_name' => 'Sortie Add',
+            'form' => $form->createView()
         ]);
     }
 
@@ -66,4 +88,6 @@ class SortiesController extends AbstractController
             'sortie' => $sortieData
         ]);
     }
+
+
 }

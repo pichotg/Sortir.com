@@ -99,7 +99,7 @@ class Sorties
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -115,7 +115,7 @@ class Sorties
     /**
      * @return string
      */
-    public function getNom(): string
+    public function getNom(): ?string
     {
         return $this->nom;
     }
@@ -131,7 +131,7 @@ class Sorties
     /**
      * @return \DateTime
      */
-    public function getDatedebut(): \DateTime
+    public function getDatedebut(): ?\DateTime
     {
         return $this->datedebut;
     }
@@ -163,7 +163,7 @@ class Sorties
     /**
      * @return \DateTime
      */
-    public function getDatecloture(): \DateTime
+    public function getDatecloture(): ?\DateTime
     {
         return $this->datecloture;
     }
@@ -179,7 +179,7 @@ class Sorties
     /**
      * @return int
      */
-    public function getNbinscriptionsmax(): int
+    public function getNbinscriptionsmax(): ?int
     {
         return $this->nbinscriptionsmax;
     }

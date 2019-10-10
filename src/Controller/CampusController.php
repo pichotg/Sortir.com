@@ -24,7 +24,7 @@ class CampusController extends AbstractController
 
         return $this->render('campus/index.html.twig', [
             'page_name' => 'campus',
-            'campus' => $this-> campusListe
+            'campus' => $this->campusListe
         ]);
     }
 
