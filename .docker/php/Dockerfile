@@ -22,11 +22,12 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
 
 WORKDIR /home/wwwroot/
 
-RUN apt-get upgrade \
-    && apt-get install argon2 libargon2-0 libargon2-0-dev
+RUN apt-get update \
+    && apt-get upgrade -y\
+    && apt-get install argon2 libargon2-0 libargon2-0-dev -y
 
-RUN cd /home/wwwroot/sf4/
-RUN composer update
+WORKDIR /home/wwwroot/sf4/
+CMD bash -c "composer update"
 
 EXPOSE 9000
 CMD ["php-fpm"]
