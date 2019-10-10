@@ -36,6 +36,7 @@ class SortiesController extends AbstractController
         $form -> handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $sortie = $form->getData();
+            $sortie->setEtatSortie("Ouvert");
             $em->persist($sortie);
             $em->flush();
             $this->addFlash('success', 'Sortie successfully added !');
