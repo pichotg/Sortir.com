@@ -20,17 +20,11 @@ RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen && \
     locale-gen
 
-WORKDIR /home/wwwroot/
-
-RUN apt-get update \
-    && apt-get upgrade -y\
-    && apt-get install argon2 libargon2-0 libargon2-0-dev -y
-
 WORKDIR /home/wwwroot/sf4/
-CMD bash -c "composer update"
 
-CMD bash -c "php bin/console doctrine:schema:update --force"
-CMD bash -c "php bin/console doctrine:fixtures:load -append"
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install argon2 libargon2-0 libargon2-0-dev -y
 
 EXPOSE 9000
 CMD ["php-fpm"]

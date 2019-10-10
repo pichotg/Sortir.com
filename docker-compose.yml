@@ -3,7 +3,6 @@ services:
     apache:
         build: .docker/apache
         container_name: sf4_apache
-        restart: always
         ports:
           - 80:80
         volumes:
@@ -15,7 +14,6 @@ services:
     mysql:
         image: mysql:8
         container_name: sf4_mysql
-        restart: always
         volumes:
             - db-data:/var/lib/mysql
         command:
@@ -24,13 +22,10 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: sortir.com
-            MYSQL_USER: root
-            MYSQL_PASSWORD: root
 
     php:
         build: .docker/php
         container_name: sf4_php
-        restart: always
         volumes:
           - .:/home/wwwroot/sf4
         environment:
@@ -42,7 +37,6 @@ services:
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         container_name: sf4_phpmyadmin
-        restart: always
         environment:
           PMA_HOST: mysql
           PMA_PORT: 3306
@@ -54,7 +48,6 @@ services:
     maildev:
         image: djfarrelly/maildev
         container_name: sf4_maildev
-        restart: always
         ports:
           - 8001:80
 
