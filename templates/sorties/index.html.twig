@@ -29,12 +29,12 @@
                 {% endfor %}
             {% else %}
                 <tr class="text-center">
-                    <th class="text-center text-muted" scope="row" colspan="4">No Sortie found...</th>
+                    <th class="text-center text-muted" scope="row" colspan="5">No Sortie found...</th>
                 </tr>
             {% endif %}
             </tbody>
         </table>
-        <a href="{{ path('add_ville') }}" class="btn btn-primary w-100 mt-4 mb-4">Add Sortie</a>
+        <a href="{{ path('sortie_add') }}" class="btn btn-primary w-100 mt-4 mb-4">Add Sortie</a>
 
     </div>
 {% endblock %}
