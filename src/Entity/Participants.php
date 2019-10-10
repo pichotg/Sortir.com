@@ -99,24 +99,6 @@ class Participants implements UserInterface
      */
     private $listOrganisateurSorties;
 
-
-    /**
-     * @return mixed
-     */
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    /**
-     * @param mixed $photo
-     */
-    public function setPhoto($photo): void
-    {
-        $this->photo = $photo;
-    }
-
-
     /**
      * Returns the password used to authenticate the user.
      *
@@ -129,6 +111,11 @@ class Participants implements UserInterface
     {
         // TODO: Implement getPassword() method.
         return $this->getMotDePasse();
+    }
+
+    public function setPassword($string)
+    {
+        $this->setMotDePasse($string);
     }
 
     /**
@@ -307,6 +294,22 @@ class Participants implements UserInterface
     public function setCampus($campus): void
     {
         $this->campus = $campus;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param mixed $photo
+     */
+    public function setPhoto($photo): void
+    {
+        $this->photo = $photo;
     }
 
 }

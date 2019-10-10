@@ -1,19 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} | {{ page_name }}{% endblock %}
+{% block title %}{{ parent() }} {{ page_name }}{% endblock %}
 
 {% block body %}
 
-    <div class="card text-center">
+    <div class="card">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Profil</a>
+                    <a class="nav-link {% if not edit %}active{% endif %}" href="{{ path('profil') }}">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if edit %}active{% endif %}" href="{{ path('profil_edit') }}">Edition</a>
                 </li>
             </ul>
         </div>
         <div class="card-body row">
-            <div class="col-4">
+            <div class="col-4 text-center">
                 {% if app.user.photo is not null %}
                     <img class="img-profile-2 rounded-circle" src="{{ asset('files/photo/' ~ app.user.photo) }}" alt="{{ app.user.username }}">
                 {% else %}
@@ -30,14 +33,22 @@
                 {% endif %}
             </div>
             <div class="col-8">
-                <h1><i class="fas fa-university"></i> Campus</h1>
-                <div class="list-group">
-                    {% if app.user.campus is not null %}
+            {% if not edit %}
+                    <h1><i class="fas fa-university"></i> Campus</h1>
+                    <div class="list-group">
+                        {% if app.user.campus is not null %}
 
-                    {% else %}
-                        <a class="list-group-item list-group-item-action" href="#">Pas de campus pour le momment</a>
-                    {% endif %}
-                </div>
+                        {% else %}
+                            <a class="list-group-item list-group-item-action" href="#">Pas de campus pour le momment</a>
+                        {% endif %}
+                    </div>
+            {% else %}
+                {% if form is not null %}
+                    <form method="post" action="{{ path('profil_edit') }}">
+                        {{ form(form, {'multipart': true}) }}
+                    </form>
+                {% endif %}
+            {% endif %}
             </div>
         </div>
     </div>

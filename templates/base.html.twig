@@ -1,3 +1,5 @@
+{% set current_path = app.request.get('_route') %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,6 +38,7 @@
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/bs-custom-file-input.min.js') }}"></script>
 {% endblock %}
 </body>
 </html>
