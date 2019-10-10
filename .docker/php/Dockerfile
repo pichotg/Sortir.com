@@ -29,5 +29,8 @@ RUN apt-get update \
 WORKDIR /home/wwwroot/sf4/
 CMD bash -c "composer update"
 
+CMD bash -c "php bin/console doctrine:schema:update --force"
+CMD bash -c "php bin/console doctrine:fixtures:load -append"
+
 EXPOSE 9000
 CMD ["php-fpm"]
