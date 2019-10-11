@@ -22,7 +22,8 @@
 ###< PHPStorm ###
 
 ###> docker ###
-.docker/data/*
+.docker/*
+docker-compose.yml
 ###< docker ###
 
 symfony.lock
