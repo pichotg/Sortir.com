@@ -30,3 +30,4 @@ symfony.lock
 composer.lock
 /public/.htaccess
 /public/files/photo/
+/.docker/
