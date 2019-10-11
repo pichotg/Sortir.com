@@ -87,12 +87,6 @@ class Participants implements UserInterface
      */
     private $campus;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Sorties")
-     * @ORM\JoinColumn(name="Sorties", referencedColumnName="id")
-     */
-    private $listSorties;
-
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sorties", mappedBy="organisateur")
@@ -150,6 +144,14 @@ class Participants implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**
