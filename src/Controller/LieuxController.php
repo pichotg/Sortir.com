@@ -41,7 +41,7 @@ class LieuxController extends AbstractController
             $em->persist($lieu);
             $em->flush();
             $this->addFlash('success', 'Lieux successfully added !');
-            return $this->redirectToRoute('/lieux');
+            return $this->redirectToRoute('lieux');
         }
 
         return $this->render('Lieux/add.html.twig', [

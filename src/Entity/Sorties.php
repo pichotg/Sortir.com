@@ -66,7 +66,7 @@ class Sorties
     /**
      * @var String
      *
-     * @ORM\Column(name="etat", type="integer", nullable=false, columnDefinition="enum('En création', 'En cours', 'Ouvert', 'Fermé')")
+     * @ORM\Column(name="etat", type="string", nullable=false, length=500, columnDefinition="enum('En création', 'En cours', 'Ouvert', 'Fermé')")
      */
     private $etatsortie;
 

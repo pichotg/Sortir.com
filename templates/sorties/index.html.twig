@@ -12,7 +12,10 @@
                 <th scope="col">Début</th>
                 <th scope="col">Fin</th>
                 <th scope="col">Durée</th>
+                <th scope="col">Inscrits/Places</th>
+                <th scope="col">Etat</th>
                 <th scope="col">Action</th>
+
             </tr>
             </thead>
             <tbody>
@@ -23,9 +26,20 @@
                         <td scope="row">{{ sortie.datedebut|date('Y-m-d')}}</td>
                         <td scope="row">{{ sortie.datecloture|date('Y-m-d') }}</td>
                         <td scope="row">{{ sortie.duree }}</td>
-                        <td scope="row"><a href="{{ path('afficher_sortie', {'id': sortie.id}) }}" class="btn"><i class="far fa-info-circle"></i></a>
-                            <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-success"><i class="far fa-edit"></i></a></td>
+                        <td scope="row">{{ sortie.listParticipants|length }}/{{ sortie.nbinscriptionsmax }}</td>
+                        <td scope="row">{{ sortie.etatsortie }}</td>
+                        <td scope="row"><a href="{{ path('afficher_sortie', {'id': sortie.id}) }}" class="btn btn-success"><i class="fas fa-info-circle"></i></a>
+                            <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-success"><i class="far fa-edit"></i></a>
+                    {% set inscrit = app.user and sortie in app.user.listSorties ? true : false %}
+                            
+                    {% if inscrit %}
+                            <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-success">Se désister <i class="fas fa-sign-in-alt"></i></a>
+                    {% else %}
+                            <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-success">S'inscrire <i class="fas fa-sign-in-alt"></i></a>
+                    {% endif %}
+                        </td>
                     </tr>
+
                 {% endfor %}
             {% else %}
                 <tr class="text-center">

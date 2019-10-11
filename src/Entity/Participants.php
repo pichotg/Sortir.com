@@ -312,4 +312,38 @@ class Participants implements UserInterface
         $this->photo = $photo;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getListSorties()
+    {
+        return $this->listSorties;
+    }
+
+    /**
+     * @param mixed $listSorties
+     */
+    public function setListSorties($listSorties): void
+    {
+        $this->listSorties = $listSorties;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getListOrganisateurSorties()
+    {
+        return $this->listOrganisateurSorties;
+    }
+
+    /**
+     * @param mixed $listOrganisateurSorties
+     */
+    public function setListOrganisateurSorties($listOrganisateurSorties): void
+    {
+        $this->listOrganisateurSorties = $listOrganisateurSorties;
+    }
+
+
+
 }
