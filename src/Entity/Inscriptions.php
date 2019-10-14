@@ -24,7 +24,7 @@ class Inscriptions
      * @ORM\ManyToOne(targetEntity="App\Entity\Participants", inversedBy="inscriptions")
      * @ORM\JoinColumn(name="participant_id", referencedColumnName="id", nullable=false)
      */
-    private $partificpant;
+    private $particicpant;
 
     /**
      * @ORM\Column(name="date_inscription", type="datetime", nullable=false)
@@ -50,17 +50,17 @@ class Inscriptions
     /**
      * @return mixed
      */
-    public function getPartificpant()
+    public function getParticicpant()
     {
-        return $this->partificpant;
+        return $this->particicpant;
     }
 
     /**
      * @param mixed $partificpant
      */
-    public function setPartificpant($partificpant): void
+    public function setParticicpant($particicpant): void
     {
-        $this->partificpant = $partificpant;
+        $this->particicpant = $particicpant;
     }
 
     /**

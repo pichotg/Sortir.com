@@ -207,7 +207,6 @@ class Sorties
         $this->descriptioninfos = $descriptioninfos;
     }
 
-
     /**
      * @return mixed
      */
@@ -287,9 +286,5 @@ class Sorties
     {
         $this->inscriptions = $inscriptions;
     }
-
-
-
-
 
 }

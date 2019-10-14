@@ -13,10 +13,17 @@ class InscriptionsFixtures extends Fixture implements DependentFixtureInterface
     {
         $inscription = new Inscriptions();
         $inscription->setSortie($this->getReference(SortiesFixtures::SORTIE_REFERENCE));
-        $inscription->setPartificpant($this->getReference(UserFixtures::USER_REFERENCE));
+        $inscription->setParticicpant($this->getReference(UserFixtures::USER_REFERENCE));
         $inscription->setDateInscription(new \DateTime("now"));
+
         $manager->persist($inscription);
         $manager->flush();
+
+        $sortie = $this->getReference(SortiesFixtures::SORTIE_REFERENCE);
+        $user = $this->getReference(UserFixtures::USER_REFERENCE);
+
+        $sortie->setInscriptions($inscription);
+        $user->setInscriptions($inscription);
     }
 
     public function getDependencies()

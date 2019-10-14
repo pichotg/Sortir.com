@@ -130,6 +130,7 @@ class ParticipantsController extends AbstractController
     public function users(EntityManagerInterface $em)
     {
         $users = $em->getRepository(Participants::class)->findAll();
+        dump($users);
 
         return $this->render('participants/users.html.twig', [
             'users' => $users,
