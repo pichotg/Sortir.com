@@ -13,29 +13,70 @@ use Doctrine\ORM\Mapping as ORM;
 class Inscriptions
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Id()
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sorties", inversedBy="inscriptions")
+     * @ORM\JoinColumn(name="sortie_id", referencedColumnName="id", nullable=false)
      */
-    private $id;
+    private $sortie;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="participants_no_participant", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Id()
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participants", inversedBy="inscriptions")
+     * @ORM\JoinColumn(name="participant_id", referencedColumnName="id", nullable=false)
      */
-    private $participantsNoParticipant;
+    private $partificpant;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="date_inscription", type="datetime", nullable=false)
      */
     private $dateInscription;
 
+    /**
+     * @return mixed
+     */
+    public function getSortie()
+    {
+        return $this->sortie;
+    }
+
+    /**
+     * @param mixed $sortie
+     */
+    public function setSortie($sortie): void
+    {
+        $this->sortie = $sortie;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPartificpant()
+    {
+        return $this->partificpant;
+    }
+
+    /**
+     * @param mixed $partificpant
+     */
+    public function setPartificpant($partificpant): void
+    {
+        $this->partificpant = $partificpant;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDateInscription()
+    {
+        return $this->dateInscription;
+    }
+
+    /**
+     * @param mixed $dateInscription
+     */
+    public function setDateInscription($dateInscription): void
+    {
+        $this->dateInscription = $dateInscription;
+    }
 
 }

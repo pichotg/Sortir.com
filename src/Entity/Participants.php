@@ -87,11 +87,15 @@ class Participants implements UserInterface
      */
     private $campus;
 
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sorties", mappedBy="organisateur")
      */
     private $listOrganisateurSorties;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Inscriptions", mappedBy="partificpant")
+     */
+    private $inscriptions;
 
     /**
      * Returns the password used to authenticate the user.

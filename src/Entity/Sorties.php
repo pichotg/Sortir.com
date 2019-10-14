@@ -72,7 +72,7 @@ class Sorties
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Participants", inversedBy="listOrganisateurSorties")
-     * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
+     * @ORM\JoinColumn(name="organisateur", referencedColumnName="id")
      */
     private $organisateur;
 
@@ -89,12 +89,11 @@ class Sorties
      */
     private $campus;
 
-
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Participants")
-     * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Inscriptions", mappedBy="sortie")
      */
-    private $listParticipants;
+    private $inscriptions;
+
 
     /**
      * @return int
@@ -255,22 +254,6 @@ class Sorties
     public function setCampus($campus): void
     {
         $this->campus = $campus;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getListParticipants()
-    {
-        return $this->listParticipants;
-    }
-
-    /**
-     * @param mixed $listParticipants
-     */
-    public function setListParticipants($listParticipants): void
-    {
-        $this->listParticipants = $listParticipants;
     }
 
     /**

@@ -124,6 +124,19 @@ class ParticipantsController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/users", name="users")
+     */
+    public function users(EntityManagerInterface $em)
+    {
+        $users = $em->getRepository(Participants::class)->findAll();
+
+        return $this->render('participants/users.html.twig', [
+            'users' => $users,
+            'page_name' => 'Gestion Utilisateurs'
+        ]);
+    }
+
     private function uploadFile($file, $user){
         // Set User profile photo
         if($file){
