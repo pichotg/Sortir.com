@@ -350,6 +350,22 @@ class Participants implements UserInterface
         $this->listOrganisateurSorties = $listOrganisateurSorties;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getInscriptions()
+    {
+        return $this->inscriptions;
+    }
+
+    /**
+     * @param mixed $inscriptions
+     */
+    public function setInscriptions($inscriptions): void
+    {
+        $this->inscriptions = $inscriptions;
+    }
+
 
 
 }
