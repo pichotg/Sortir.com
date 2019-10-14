@@ -1,4 +1,4 @@
-FROM php:7.2.3-fpm
+FROM php:7.3-fpm
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends vim curl debconf subversion git apt-transport-https apt-utils \
@@ -18,15 +18,12 @@ RUN groupadd dev -g 999
 RUN useradd dev -g dev -d /home/dev -m
 
 RUN rm -rf /var/lib/apt/lists/*
-RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
-    echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen && \
-    locale-gen
 
-WORKDIR /home/wwwroot/sf4/
+WORKDIR /home/root/sortir.com/
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install argon2 libargon2-0 libargon2-0-dev -y
+    apt-get install argon2 libargon2-0 libargon2-0-dev iputils-ping -y
 
 EXPOSE 9000
 CMD ["php-fpm"]
