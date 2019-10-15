@@ -4,6 +4,10 @@ $(document).ready( function () {
     bsCustomFileInput.init();
 
     let table = $('table').DataTable({
+        'rowReorder': {
+            'selector': 'td:nth-child(2)'
+        },
+        'responsive': true,
         'searching': true,
         'paging': false,
         'info': false,

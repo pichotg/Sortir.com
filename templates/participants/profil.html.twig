@@ -16,7 +16,7 @@
             </ul>
         </div>
         <div class="card-body row">
-            <div class="col-4 text-center">
+            <div class="col-auto text-center">
                 {% if app.user.photo is not null %}
                     <img class="img-profile-2 rounded-circle" src="{{ asset('files/photo/' ~ app.user.photo) }}" alt="{{ app.user.username }}">
                 {% else %}
@@ -32,7 +32,7 @@
                     <a href="#"><i class="fas fa-phone"></i> {{ app.user.telephone }}</a>
                 {% endif %}
             </div>
-            <div class="col-8">
+            <div class="col-9">
             {% if not edit %}
                     <h1><i class="fas fa-university"></i> Campus</h1>
                     <div class="list-group">

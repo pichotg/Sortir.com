@@ -13,7 +13,7 @@ class MainController extends AbstractController
     public function index()
     {
         return $this->render('main/home.html.twig', [
-            'app_name' => 'Sortir.com',
+            'page_name' => 'Home',
         ]);
     }
 }
