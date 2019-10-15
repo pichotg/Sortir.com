@@ -121,21 +121,15 @@ class SortiesController extends AbstractController
     /**
      * @Route("/sorties/removeParticipant/{id}", name="remove_participant_sortie")
      */
-    public function remove_participant(EntityManagerInterface $em, Request $request, Inscriptions $inscription){
-
+    public function remove_participant(EntityManagerInterface $em, Request $request){
+        dump($request->get('id'));
         $participant = $this->getUser();
 
         $sortie = $em->getRepository(Sorties::class)->find($request->get('id'));
 
         $inscription = $em->getRepository(Inscriptions::class)->findBy(['sortie'=>$sortie->getId(), 'participant'=>$participant->getId()],['sortie'=>'ASC']);
         dump($inscription);
-        $inscriptionRemove = new Inscriptions();
-
-        $inscriptionRemove->setSortie($inscription[0]->getSortie());
-        $inscriptionRemove->setParticipant($inscription[0]->getParticipant());
-        $inscriptionRemove->setDateInscription($inscription[0]->getDateInscription());
-        dump($inscriptionRemove);
-        $em->remove($inscriptionRemove);
+        $em->remove($inscription[0]);
         $em->flush();
 
         return $this->redirectToRoute('sorties');

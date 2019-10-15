@@ -12,15 +12,40 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Inscriptions
 {
+
     /**
-     * @ORM\Id()
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @return int
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Sorties", inversedBy="inscriptions")
      * @ORM\JoinColumn(name="sortie_id", referencedColumnName="id", nullable=false)
      */
     private $sortie;
 
     /**
-     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="App\Entity\Participants", inversedBy="inscriptions")
      * @ORM\JoinColumn(name="participant_id", referencedColumnName="id", nullable=false)
      */
@@ -66,7 +91,7 @@ class Inscriptions
     /**
      * @return mixed
      */
-    public function getDateInscription()
+    public function getDateInscription(): ?\DateTime
     {
         return $this->dateInscription;
     }
