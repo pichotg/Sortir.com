@@ -71,8 +71,10 @@
                         <td scope="row">{{ sortie.etatsortie }}</td>
 
                         <td scope="row" id="rowAction"><a href="{{ path('afficher_sortie', {'id': sortie.id}) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
-                            <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-warning"><i class="far fa-edit"></i></a>
 
+                            {% if app.user == sortie.organisateur %}
+                            <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                            {% endif %}
 
 
                             {% if inscrit %}
