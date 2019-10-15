@@ -6,10 +6,12 @@ use App\Entity\Participants;
 use App\Form\ParticipantsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use function Sodium\add;
 
 class ParticipantsController extends AbstractController
 {
@@ -34,6 +36,71 @@ class ParticipantsController extends AbstractController
     public function logout()
     {
 
+    }
+
+    /**
+     * @Route("/resetPassword", name="reset_password")
+     */
+    public function reset_password(Request $request, \Swift_Mailer $mailer, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
+    {
+        $user = new Participants();
+        $form = $this->createForm(ParticipantsType::class, $user);
+        $form->remove('pseudo')
+            ->remove('nom')
+            ->remove('prenom')
+            ->remove('telephone')
+            ->remove('campus')
+            ->remove('motDePasse')
+            ->remove('photo')
+            ->remove('actif')
+            ->remove('id')
+            ->remove('submit');
+        $form->add('submit',SubmitType::class, [
+            'label' => 'Envoyer le nouveau mot de passe',
+            'attr' => [
+                'class' => 'btn btn-primary w-100'
+            ]
+        ]);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $mail = $form['mail']->getData();
+            $user = $em->getRepository(Participants::class)->findOneByMail($mail);
+
+            if(!is_null($user)){
+                // Reset current password by random password
+                $random_password = $this->generateRandomString();
+                $encoded_password = $encoder->encodePassword($user, $random_password);
+                $user->setPassword($encoded_password);
+
+                $em->persist($user);
+                $em->flush();
+
+                $message = (new \Swift_Message('Sortir.com | Réinitialisation du mot de passe'))
+                    ->setFrom('admin@sortir.com')
+                    ->setTo($user->getMail())
+                    ->setBody(
+                        $this->renderView(
+                            'mail/reset_password.html.twig', [
+                                'user' => $user,
+                                'random_password' => $random_password
+                            ]
+                        ),
+                        'text/html'
+                    );
+                $mailer->send($message);
+                $this->addFlash('success', 'L\'email de réinitialisation du mot de passe à été envoyé à l\'adresse : ' . $mail);
+                $this->redirectToRoute('home');
+            } else {
+                $this->addFlash('danger', 'Il n\'existe aucun compte avec l\'adresse mail : ' . $mail);
+            }
+        }
+
+        return $this->render('participants/reset_password.html.twig', [
+            'page_name' => 'Réinitialisation du mot de passe',
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -212,6 +279,17 @@ class ParticipantsController extends AbstractController
             $user->setPhoto($newFilename);
         }
         return $user;
+    }
+
+    public function generateRandomString($length = 16, $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#@-_=$')
+    {
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++)
+        {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 
 }
