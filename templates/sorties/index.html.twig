@@ -74,10 +74,10 @@
                                 {% endfor %}
                             {% endfor %}
                             {% if inscrit %}
-                                <a id="desister" href="{{ path('remove_participant_sortie', {'id': sortie.id,'idparticipant':app.user.id }) }}" class="btn btn-success">Se désister <i class="fas fa-sign-in-alt"></i></a>
+                                <a id="desister" href="{{ path('remove_participant_sortie', {'id': sortie.id}) }}" class="btn btn-success">Se désister <i class="fas fa-sign-in-alt"></i></a>
                                 <a id="inscrire" style="display:none" href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-success">S'inscrire <i class="fas fa-sign-in-alt"></i></a>
                             {% else %}
-                                <a id="desister" style="display:none" href="{{ path('remove_participant_sortie', {'id': sortie.id, 'idparticipant': app.user.id}) }}" class="btn btn-success">Se désister <i class="fas fa-sign-in-alt"></i></a>
+                                <a id="desister" style="display:none" href="{{ path('remove_participant_sortie', {'id': sortie.id}) }}" class="btn btn-success">Se désister <i class="fas fa-sign-in-alt"></i></a>
                                 <a id="inscrire" href="{{ path('add_participant_sortie', {'id': sortie.id}) }}" class="btn btn-success">S'inscrire <i class="fas fa-sign-in-alt"></i></a>
                             {% endif %}
 

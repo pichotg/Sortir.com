@@ -7,7 +7,9 @@ use App\Entity\Participants;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,6 +22,13 @@ class ParticipantsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('id', IntegerType::class, [
+                'label' => 'ID',
+                'attr' =>
+                    [
+                        'readonly' => true
+                    ]
+            ])
             ->add('pseudo', TextType::class)
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
@@ -51,7 +60,12 @@ class ParticipantsType extends AbstractType
                     ])
                 ],
             ])
-            ->add('Soumettre',SubmitType::class, [
+            ->add('actif', CheckboxType::class, [
+                'label' => 'Actif',
+                'required' => false
+            ])
+            ->add('submit',SubmitType::class, [
+                'label' => 'Soumettre',
                 'attr' => [
                     'class' => 'btn btn-success w-100'
                 ]
