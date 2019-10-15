@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Inscriptions;
+use App\Entity\Lieux;
 use App\Entity\Sorties;
 use App\Form\FilterType;
 use App\Form\SortiesType;
+use App\Repository\SortiesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,18 +21,26 @@ class SortiesController extends AbstractController
     /**
      * @Route("/sorties", name="sorties")
      */
-    public function index(Request $request, EntityManagerInterface $em)
+    public function index(Request $request, SortiesRepository $sr, EntityManagerInterface $em)
     {
         $form = $this->createForm(FilterType::class);
         $form->handleRequest($request);
-
-        $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            dump($data['lieu']);
-          // $this->sortiesListe = $em->getRepository(Sorties::class)->findAllFilter($data);
 
+            $lieu = $form['lieu']->getData();
+
+            $start = $form['start']->getData();
+            $close = $form['close']->getData();
+            $ownorganisateur = $form['ownorganisateur']->getData();
+            $subscibed = $form['subscibed']->getData();
+            $unsubscribed = $form['unsubscribed']->getData();
+            $passed = $form['passed']->getData();
+
+            $this->sortiesListe = $sr->findAllFilter($this->getUser(), $lieu,$ownorganisateur , $start, $close, $subscibed, $unsubscribed, $passed);
+        }else{
+            $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();
         }
+
 
         return $this->render('sorties/index.html.twig', [
             'controller_name' => 'SortiesController',

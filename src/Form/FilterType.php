@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Tests\Fixtures\Entity;
 
 class FilterType extends AbstractType
 {
@@ -24,39 +25,54 @@ class FilterType extends AbstractType
               'query_builder' => function(EntityRepository $repository) {
                   return $repository->createQueryBuilder('c')->orderBy('c.nomLieu', 'ASC');
               },
-              'required'      => false
+              'required'      => false,
+              'empty_data' => null,
+              'mapped' => false
           ])
           ->add('start',DateType::class,  [
               'label'    => 'Date Entre',
               'required'      => false,
+              'empty_data' => null,
+              'mapped' => false
           ])
           ->add('close',DateType::class,  [
               'label'    => 'et',
               'required'      => false,
+              'empty_data' => null,
+              'mapped' => false
           ])
           ->add('ownorganisateur',CheckboxType::class,  [
               'label'    => 'Sorties dont je suis organisateur',
               'required'      => false,
+              'empty_data' => null,
+              'mapped' => false
           ])
           ->add('subscibed',CheckboxType::class,  [
               'label'    => 'Sorties auxquelle je suis inscrit',
               'required'      => false,
+              'empty_data' => null,
+              'mapped' => false
           ])
           ->add('unsubscribed',CheckboxType::class,  [
               'label'    => 'Sorties auxquelles je ne suis pas inscrit',
               'required'      => false,
+              'empty_data' => null,
+              'mapped' => false
           ])
           ->add('passed',CheckboxType::class,  [
               'label'    => 'Sorties passées',
               'required'      => false,
+              'empty_data' => null,
+              'mapped' => false
           ])
-          ->add('Rechercher', SubmitType::class);
+          ->add('submit', SubmitType::class);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // Configure your form options here
-        ]);
+             'validation_groups' => false,
+            ]);
     }
 }
