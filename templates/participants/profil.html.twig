@@ -8,10 +8,13 @@
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link {% if not edit %}active{% endif %}" href="{{ path('profil') }}">Profil</a>
+                    <a class="nav-link {% if not edit and not edit_password %}active{% endif %}" href="{{ path('profil') }}">Profil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if edit %}active{% endif %}" href="{{ path('profil_edit') }}">Edition</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if edit_password %}active{% endif %}" href="{{ path('profil_edit_password') }}">Modifier le mot de passe</a>
                 </li>
             </ul>
         </div>
@@ -32,22 +35,24 @@
                     <a href="#"><i class="fas fa-phone"></i> {{ app.user.telephone }}</a>
                 {% endif %}
             </div>
-            <div class="col-9">
-            {% if not edit %}
-                    <h1><i class="fas fa-university"></i> Campus</h1>
-                    <div class="list-group">
-                        {% if app.user.campus is not null %}
-                            <a class="list-group-item list-group-item-action" href="#">{{ app.user.campus.nomCampus }}</a>
-                        {% else %}
-                            <a class="list-group-item list-group-item-action" href="#">Pas de campus pour le momment</a>
-                        {% endif %}
-                    </div>
-            {% else %}
+            <div class="col-8">
+            {% if edit %}
                 {% if form is not null %}
-                    <form method="post" action="{{ path('profil_edit') }}">
-                        {{ form(form, {'multipart': true}) }}
-                    </form>
+                    {{ form(form) }}
                 {% endif %}
+            {% elseif edit_password %}
+                {% if form is not null %}
+                    {{ form(form) }}
+                {% endif %}
+            {% else %}
+                <h1><i class="fas fa-university"></i> Campus</h1>
+                <div class="list-group">
+                    {% if app.user.campus is not null %}
+                        <a class="list-group-item list-group-item-action" href="#">{{ app.user.campus.nomCampus }}</a>
+                    {% else %}
+                        <a class="list-group-item list-group-item-action" href="#">Pas de campus pour le momment</a>
+                    {% endif %}
+                </div>
             {% endif %}
             </div>
         </div>

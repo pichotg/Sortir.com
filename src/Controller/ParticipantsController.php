@@ -6,6 +6,8 @@ use App\Entity\Participants;
 use App\Form\ParticipantsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,7 +41,7 @@ class ParticipantsController extends AbstractController
     }
 
     /**
-     * @Route("/resetPassword", name="reset_password")
+     * @Route("/reset_password", name="reset_password")
      */
     public function reset_password(Request $request, \Swift_Mailer $mailer, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
     {
@@ -56,7 +58,7 @@ class ParticipantsController extends AbstractController
             ->remove('id')
             ->remove('submit');
         $form->add('submit',SubmitType::class, [
-            'label' => 'Envoyer le nouveau mot de passe',
+            'label' => 'Envoyer l\'email',
             'attr' => [
                 'class' => 'btn btn-primary w-100'
             ]
@@ -69,27 +71,13 @@ class ParticipantsController extends AbstractController
             $user = $em->getRepository(Participants::class)->findOneByMail($mail);
 
             if(!is_null($user)){
-                // Reset current password by random password
-                $random_password = $this->generateRandomString();
-                $encoded_password = $encoder->encodePassword($user, $random_password);
-                $user->setPassword($encoded_password);
-
-                $em->persist($user);
-                $em->flush();
-
-                $message = (new \Swift_Message('Sortir.com | Réinitialisation du mot de passe'))
-                    ->setFrom('admin@sortir.com')
+                $message = new \Swift_Message();
+                $message->setSubject("Changement de mot de passe")
+                    ->setFrom("admin@sortir.com")
                     ->setTo($user->getMail())
-                    ->setBody(
-                        $this->renderView(
-                            'mail/reset_password.html.twig', [
-                                'user' => $user,
-                                'random_password' => $random_password
-                            ]
-                        ),
-                        'text/html'
-                    );
+                    ->setBody($this->renderView("mail/reset_password.html.twig", ["email" => $mail]), "text/html");
                 $mailer->send($message);
+
                 $this->addFlash('success', 'L\'email de réinitialisation du mot de passe à été envoyé à l\'adresse : ' . $mail);
                 $this->redirectToRoute('home');
             } else {
@@ -97,8 +85,48 @@ class ParticipantsController extends AbstractController
             }
         }
 
-        return $this->render('participants/reset_password.html.twig', [
+        return $this->render('participants/send_reset_password.html.twig', [
             'page_name' => 'Réinitialisation du mot de passe',
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/reset_password/{email}", name="reset_password_email")
+     */
+    public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, $email){
+        $user = new Participants();
+        $form = $this->createForm(ParticipantsType::class);
+        $form->remove('id')
+            ->remove('pseudo')
+            ->remove('nom')
+            ->remove('prenom')
+            ->remove('telephone')
+            ->remove('mail')
+            ->remove('campus')
+            ->remove('photo')
+            ->remove('actif');
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $user = $form->getData();
+            $userModif = $em->getRepository(Participants::class)->findOneByMail($email);
+
+            $userModif->setPassword('');
+            $password = $passwordEncoder->encodePassword($user, $form->getData()->getPassword());
+            $userModif->setPassword($password);
+
+            $em->persist($userModif);
+            $em->flush();
+
+            $this->addFlash('success','Votre mot de passe à été modifié !');
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('participants/reset_password.html.twig',[
+            'page_name' => 'Réinitialiser le mot de passe',
             'form' => $form->createView()
         ]);
     }
@@ -146,6 +174,7 @@ class ParticipantsController extends AbstractController
     {
         return $this->render('participants/profil.html.twig', [
             'edit' => false,
+            'edit_password' => false,
             'form' => null,
             'page_name' => 'Profil'
         ]);
@@ -182,15 +211,59 @@ class ParticipantsController extends AbstractController
 
             $em->persist($participant);
             $em->flush();
-            $this->addFlash('success','Le profil a été été mis à jour !');
+            $this->addFlash('success','Le profil a été mis à jour !');
 
             return $this->redirectToRoute('profil');
         }
 
         return $this->render('participants/profil.html.twig', [
             'edit' => true,
+            'edit_password' => false,
             'form' => $form->createView(),
             'page_name' => 'Profil'
+        ]);
+    }
+
+    /**
+     * @Route("/profil/edit_password", name="profil_edit_password")
+     */
+    public function profil_edit_password(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
+    {
+        $user = new Participants();
+        $user = $this->getUser();
+
+        $form = $this->createForm(ParticipantsType::class, $user);
+        $form->remove('id')
+            ->remove('pseudo')
+            ->remove('nom')
+            ->remove('prenom')
+            ->remove('telephone')
+            ->remove('mail')
+            ->remove('campus')
+            ->remove('photo')
+            ->remove('actif');
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $user = new Participants();
+            $user = $form->getData();
+
+            $encoded_password = $encoder->encodePassword($user, $form['motDePasse']->getData());
+            $user->setPassword($encoded_password);
+
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('success','Votre mot de passe a été mis à jour !');
+
+            return $this->redirectToRoute('profil');
+        }
+
+        return $this->render('participants/profil.html.twig', [
+            'edit' => false,
+            'edit_password' => true,
+            'form' => $form->createView(),
+            'page_name' => 'Modification du mot de passe'
         ]);
     }
 
