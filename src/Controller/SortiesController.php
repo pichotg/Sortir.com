@@ -3,10 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Inscriptions;
+use App\Entity\Lieux;
 use App\Entity\Participants;
 use App\Entity\Sorties;
+use App\Form\FilterType;
 use App\Form\SortiesType;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use PhpParser\Node\Expr\Array_;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,12 +27,23 @@ class SortiesController extends AbstractController
     /**
      * @Route("/sorties", name="sorties")
      */
-    public function index( EntityManagerInterface $em)
+    public function index(Request $request, EntityManagerInterface $em)
     {
+        $data = ['unsubscribed' => true];
+        $form = $this->createForm(FilterType::class, $data);
+        $form->handleRequest($request);
+
         $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();
-        dump($this->sortiesListe);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            dump($data['lieu']);
+          // $this->sortiesListe = $em->getRepository(Sorties::class)->findAllFilter($data);
+
+        }
+
         return $this->render('sorties/index.html.twig', [
             'controller_name' => 'SortiesController',
+            'form' => $form->createView(),
             'sorties' => $this->sortiesListe,
             'page_name' => "Sorties"
         ]);
