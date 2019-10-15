@@ -21,8 +21,7 @@ class SortiesController extends AbstractController
      */
     public function index(Request $request, EntityManagerInterface $em)
     {
-        $data = ['unsubscribed' => true];
-        $form = $this->createForm(FilterType::class, $data);
+        $form = $this->createForm(FilterType::class);
         $form->handleRequest($request);
 
         $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();

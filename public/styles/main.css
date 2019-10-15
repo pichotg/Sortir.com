@@ -32,3 +32,20 @@ td {
     height: 8rem;
     width: 8rem;
 }
+
+#listSorties{
+    margin-top:80px;
+}
+
+#rowSortie{
+    margin-top:20px;
+}
+
+#listParticipants{
+    margin-top:80px;
+
+}
+
+#titleParticipants{
+    font-weight:bold;
+}
