@@ -26,10 +26,10 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user->setRoles(['ROLE_ADMIN']);
         $user->setPseudo('admin');
         $user->setPrenom('Admin');
-        $user->setNom('');
+        $user->setNom('Admin');
         $user->setMail('admin@sortir.com');
+        $user->setTelephone('0000000000');
         $user->setMotDePasse($this->_encoder->encodePassword($user, 'admin'));
-        $user->setTelephone(null);
         $user->setCampus($this->getReference(CampusFixtures::ADMIN_CAMPUS_REFERENCE));
 
         $manager->persist($user);
@@ -44,7 +44,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user->setNom('Doe');
         $user->setMail('johndoe@gmail.com');
         $user->setMotDePasse($this->_encoder->encodePassword($user, 'user'));
-        $user->setTelephone(null);
+        $user->setTelephone('0000000000');
         $user->setCampus($this->getReference(CampusFixtures::USER_CAMPUS_REFERENCE));
         $manager->persist($user);
 

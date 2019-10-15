@@ -153,9 +153,17 @@ class Participants implements UserInterface
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     /**
@@ -273,7 +281,7 @@ class Participants implements UserInterface
     /**
      * @return bool
      */
-    public function isActif(): bool
+    public function isActif(): ?bool
     {
         return $this->actif;
     }

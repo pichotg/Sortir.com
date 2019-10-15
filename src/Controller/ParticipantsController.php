@@ -42,7 +42,9 @@ class ParticipantsController extends AbstractController
     public function addParticipants(Request $request,UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em){
         $participant = new Participants();
 
-        $formParticipant =$this->createForm(ParticipantsType::class);
+        $formParticipant = $this->createForm(ParticipantsType::class);
+        $formParticipant->remove('actif')
+                        ->remove('id');
 
         $formParticipant->handleRequest($request);
 
@@ -93,7 +95,8 @@ class ParticipantsController extends AbstractController
         $form = $this->createForm(ParticipantsType::class, $participant);
         $form->remove('motDePasse')
              ->remove('campus')
-             ->remove('photo');
+             ->remove('photo')
+             ->remove('actif');
 
         $form->handleRequest($request);
 
@@ -127,15 +130,63 @@ class ParticipantsController extends AbstractController
     /**
      * @Route("/users", name="users")
      */
-    public function users(EntityManagerInterface $em)
+    public function users(Request $request, EntityManagerInterface $em)
     {
+        $user = new Participants();
+        $form = $this->createForm(ParticipantsType::class, $user);
+        $form->remove('photo')
+            ->remove('motDePasse');
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $user_id = $form['id']->getData();
+            $user = $em->getRepository(Participants::class)->findOneById($user_id);
+
+            $user_new = new Participants();
+            $user_new = $form->getData();
+
+            $user->setPseudo($user_new->getPseudo());
+            $user->setNom($user_new->getNom());
+            $user->setPrenom($user_new->getPrenom());
+            $user->setTelephone($user_new->getTelephone());
+            $user->setMail($user_new->getMail());
+            $user->setCampus($user_new->getCampus());
+            $user->setActif($user_new->isActif());
+
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('success','L\'utilisateur ' . $user->getPseudo() . ' a été été mis à jour !');
+        }
+
         $users = $em->getRepository(Participants::class)->findAll();
-        dump($users);
 
         return $this->render('participants/users.html.twig', [
             'users' => $users,
+            'form' => $form->createView(),
             'page_name' => 'Gestion Utilisateurs'
         ]);
+    }
+
+    /**
+     * @Route("/users/delete", name="delete_users")
+     */
+    public function delete_users(Request $request, EntityManagerInterface $em)
+    {
+        $user_id = $request->request->get('participants')['id'];
+        if($this->getUser()->getId() != $user_id){
+            $user = $em->getRepository(Participants::class)->findOneById($user_id);
+            $user_pseudo = $user->getPseudo();
+
+            $em->remove($user);
+            $em->flush();
+
+            $this->addFlash('success','L\'utilisateur ' . $user_pseudo . ' a été été mis à jour !');
+        } else {
+            $this->addFlash('danger','Vous ne pouvez pas supprimer votre propre utilisateur.');
+        }
+
+        return $this->redirectToRoute('users');
     }
 
     private function uploadFile($file, $user){

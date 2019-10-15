@@ -26,4 +26,3 @@ services:
 networks:
   mysql_network:
     external: true
-
