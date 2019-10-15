@@ -175,13 +175,16 @@ class ParticipantsController extends AbstractController
     {
         $user_id = $request->request->get('participants')['id'];
         if($this->getUser()->getId() != $user_id){
+            $user = new Participants();
             $user = $em->getRepository(Participants::class)->findOneById($user_id);
             $user_pseudo = $user->getPseudo();
+            if(sizeof($user->getListOrganisateurSorties()) == 0){
+                $em->remove($user);
+                $em->flush();
 
-            $em->remove($user);
-            $em->flush();
-
-            $this->addFlash('success','L\'utilisateur ' . $user_pseudo . ' a été été mis à jour !');
+                $this->addFlash('success','L\'utilisateur ' . $user_pseudo . ' a été été mis à jour !');
+            }
+            $this->addFlash('danger','L\'utilisateur est l\'organisateur de un ou plusieurs événement.');
         } else {
             $this->addFlash('danger','Vous ne pouvez pas supprimer votre propre utilisateur.');
         }
