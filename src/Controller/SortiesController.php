@@ -102,9 +102,11 @@ class SortiesController extends AbstractController
     public function afficher(Sorties $sortie, Request $request, EntityManagerInterface $em)
     {
         $sortieData = $this->sortiesListe = $em->getRepository(Sorties::class)->find($request->get('id'));
+        $participants = $em->getRepository(Inscriptions::class)->findBy(['sortie'=>$request->get('id')]);
         return $this->render('sorties/afficher.html.twig', [
             'page_name' => 'Afficher Sortie',
-            'sortie' => $sortieData
+            'sortie' => $sortieData,
+            'participants' => $participants
         ]);
     }
 
@@ -126,6 +128,7 @@ class SortiesController extends AbstractController
 
 
         $em->flush();
+        $this->addFlash('success', 'Inscription successfully done !');
         return $this->redirectToRoute('sorties');
     }
 
@@ -142,7 +145,7 @@ class SortiesController extends AbstractController
         dump($inscription);
         $em->remove($inscription[0]);
         $em->flush();
-
+        $this->addFlash('success', 'Inscription successfully remove !');
         return $this->redirectToRoute('sorties');
     }
 
