@@ -23,23 +23,6 @@ class Inscriptions
     private $id;
 
     /**
-     * @return int
-     */
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Sorties", inversedBy="inscriptions")
      * @ORM\JoinColumn(name="sortie_id", referencedColumnName="id", nullable=false)
      */
@@ -55,6 +38,22 @@ class Inscriptions
      * @ORM\Column(name="date_inscription", type="datetime", nullable=false)
      */
     private $dateInscription;
+
+    /**
+     * @return int
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return mixed
