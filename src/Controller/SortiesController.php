@@ -3,18 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Inscriptions;
-use App\Entity\Lieux;
-use App\Entity\Participants;
 use App\Entity\Sorties;
 use App\Form\FilterType;
 use App\Form\SortiesType;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
-use PhpParser\Node\Expr\Array_;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
