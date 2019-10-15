@@ -33,10 +33,11 @@
             <thead class="thead-dark text-center">
             <tr>
                 <th scope="col">Nom</th>
-                <th scope="col">Début</th>
-                <th scope="col">Fin</th>
+                <th scope="col">Cloture inscription</th>
+                <th scope="col">Début evenement</th>
                 <th scope="col">Durée</th>
                 <th scope="col">Inscrits/Places</th>
+                <th scope="col">Inscrits</th>
                 <th scope="col">Etat</th>
                 <th scope="col">Action</th>
 
@@ -48,32 +49,37 @@
 
                 {% for sortie in sorties %}
 
-
+                    {% set inscrit = app.user and sortie in app.user.inscriptions ? true : false %}
+                    {% for inscription in app.user.inscriptions %}
+                        {% for inscriptions in sortie.inscriptions %}
+                            {% if inscription == inscriptions %}
+                                {% set inscrit= app.user %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
                     <tr class="text-center">
                         <td scope="row">{{ sortie.nom }}</td>
-                        <td scope="row">{{ sortie.datedebut|date('Y-m-d')}}</td>
                         <td scope="row">{{ sortie.datecloture|date('Y-m-d') }}</td>
-                        <td scope="row">{{ sortie.duree }}</td>
+                        <td scope="row">{{ sortie.datedebut|date('Y-m-d')}}</td>
+                        <td scope="row">{{ sortie.duree }} min </td>
                         <td scope="row">{{ sortie.inscriptions|length }}/{{ sortie.nbinscriptionsmax }}</td>
-                       <td scope="row">{{ sortie.etatsortie }}</td>
-
-                        <td scope="row" id="rowAction"><a href="{{ path('afficher_sortie', {'id': sortie.id}) }}" class="btn btn-success"><i class="fas fa-info-circle"></i></a>
-                            <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-success"><i class="far fa-edit"></i></a>
-
-
-                            {% set inscrit = app.user and sortie in app.user.inscriptions ? true : false %}
-                            {% for inscription in app.user.inscriptions %}
-                                {% for inscriptions in sortie.inscriptions %}
-                                    {% if inscription == inscriptions %}
-                                        {% set inscrit= app.user %}
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
+                        <td scope="row" class="text-success">
                             {% if inscrit %}
-                                <a id="desister" href="{{ path('remove_participant_sortie', {'id': sortie.id}) }}" class="btn btn-success">Se désister <i class="fas fa-sign-in-alt"></i></a>
+                           <i class="fas fa-check-circle"></i>
+                            {% endif %}
+                        </td>
+                        <td scope="row">{{ sortie.etatsortie }}</td>
+
+                        <td scope="row" id="rowAction"><a href="{{ path('afficher_sortie', {'id': sortie.id}) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
+                            <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+
+
+
+                            {% if inscrit %}
+                                <a id="desister" href="{{ path('remove_participant_sortie', {'id': sortie.id}) }}" class="btn btn-danger">Se désister <i class="fas fa-sign-in-alt"></i></a>
                                 <a id="inscrire" style="display:none" href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-success">S'inscrire <i class="fas fa-sign-in-alt"></i></a>
                             {% else %}
-                                <a id="desister" style="display:none" href="{{ path('remove_participant_sortie', {'id': sortie.id}) }}" class="btn btn-success">Se désister <i class="fas fa-sign-in-alt"></i></a>
+                                <a id="desister" style="display:none" href="{{ path('remove_participant_sortie', {'id': sortie.id}) }}" class="btn btn-danger">Se désister <i class="fas fa-sign-in-alt"></i></a>
                                 <a id="inscrire" href="{{ path('add_participant_sortie', {'id': sortie.id}) }}" class="btn btn-success">S'inscrire <i class="fas fa-sign-in-alt"></i></a>
                             {% endif %}
 
