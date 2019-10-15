@@ -93,7 +93,7 @@ class Participants implements UserInterface
     private $listOrganisateurSorties;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Inscriptions", mappedBy="particicpant")
+     * @ORM\OneToMany(targetEntity="App\Entity\Inscriptions", mappedBy="participant")
      */
     private $inscriptions;
 
