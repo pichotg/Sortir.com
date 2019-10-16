@@ -27,8 +27,8 @@ class SortiesRepository extends ServiceEntityRepository
         Participants $loguser,
         Lieux $formLieu = null,
         bool $ownorganisateur = false ,
-        DateTime $start = null,
-        DateTime $stop = null,
+        string $start = null,
+        string $stop = null,
         bool $subscibed = false,
         bool $unsubscribed= false,
         bool $passed = false)
@@ -39,12 +39,16 @@ class SortiesRepository extends ServiceEntityRepository
                 ->setParameter('lieu', $formLieu->getId());
         }
         if ($start != null){
+            $starttime = strtotime($start);
+            $startnewformat = date('Y-m-d',$starttime);
             $qb ->andWhere('s.datedebut >= :datedebut')
-                ->setParameter('datedebut', $start);
+                ->setParameter('datedebut', $startnewformat);
         }
         if ($stop != null){
+            $stoptime = strtotime($stop);
+            $stopnewformat = date('Y-m-d',$stoptime);
             $qb ->andWhere('s.datecloture <= :datecloture')
-                ->setParameter('datecloture', $stop);
+                ->setParameter('datecloture', $stopnewformat);
         }
         if ($passed){
             $qb ->andWhere('s.datedebut <= :passed')

@@ -29,8 +29,10 @@ class SortiesController extends AbstractController
 
             $lieu = $form['lieu']->getData();
 
+
             $start = $form['start']->getData();
             $close = $form['close']->getData();
+
             $ownorganisateur = $form['ownorganisateur']->getData();
             $subscibed = $form['subscibed']->getData();
             $unsubscribed = $form['unsubscribed']->getData();
