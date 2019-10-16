@@ -42,7 +42,15 @@ class SortiesType extends AbstractType
                     return $repository->createQueryBuilder('c')->orderBy('c.nomCampus', 'ASC');
                 }
             ])
-            ->add('Send', SubmitType::class)
+            ->add('Send', SubmitType::class,[
+                'label' =>'Enregistrer'
+            ])
+            ->add('Publish', SubmitType::class,[
+                'label' =>'Publier'
+            ])
+            ->add('Cancel', SubmitType::class,[
+                'label' =>'Annuler'
+            ])
         ;
     }
 

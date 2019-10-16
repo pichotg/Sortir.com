@@ -61,7 +61,14 @@ class SortiesController extends AbstractController
         $form -> handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $sortie = $form->getData();
-            $sortie->setEtatSortie("Ouvert");
+            if( $form->get('Send')->isClicked()){
+                $sortie->setEtatSortie("En création");
+            }elseif( $form->get('Publish')->isClicked()){
+                $sortie->setEtatSortie("Ouvert");
+            }else{
+                return $this->redirectToRoute('sorties');
+            }
+
             $sortie->setOrganisateur($this->getUser());
 
             $em->persist($sortie);
@@ -87,6 +94,14 @@ class SortiesController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $sortie = $form->getData();
+
+            if( $form->get('Send')->isClicked()){
+                $sortie->setEtatSortie("En création");
+            }elseif( $form->get('Publish')->isClicked()){
+                $sortie->setEtatSortie("Ouvert");
+            }else{
+                return $this->redirectToRoute('sorties');
+            }
 
             $em->persist($sortie);
             $em->flush();
