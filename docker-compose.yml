@@ -1,28 +1,55 @@
 version: '3.7'
 services:
-  apache:
-    build: .docker/apache
-    container_name: sortir.com_apache
-    ports:
-      - 80:80
-    volumes:
-      - .docker/config/vhosts:/etc/apache2/sites-enabled
-      - .:/home/root/sortir.com:cached
-    depends_on:
-      - php
-    networks:
-      - mysql_network
+    apache:
+        build: .docker/apache
+        container_name: sortir.com_apache
+        ports:
+          - 80:80
+        volumes:
+          - .docker/config/vhosts:/etc/apache2/sites-enabled
+          - .:/home/www/sortir.com:cached
+        depends_on:
+          - php
 
-  php:
-    build: .docker/php
-    container_name: sortir.com_php
-    volumes:
-      - .:/home/root/sortir.com:cached
-    external_links:
-      - mysql
-    networks:
-      - mysql_network
+    mysql:
+        image: mysql:8
+        container_name: sortir.com_mysql
+        volumes:
+            - .docker/data/db:/var/lib/mysql
+        command:
+            - "--default-authentication-plugin=mysql_native_password"
+            - "--lower_case_table_names=1"        
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: sortir.com
 
-networks:
-  mysql_network:
-    external: true
+    php:
+        build: .docker/php
+        container_name: sortir.com_php
+        volumes:
+          - .:/home/www/sortir.com:cached
+        environment:
+          - maildev_host=sortir.com_maildev
+        depends_on:
+          - maildev
+          - mysql
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: sortir.com_phpmyadmin
+        environment:
+          PMA_HOST: mysql
+          PMA_PORT: 3306
+        ports:
+            - 8080:80
+        links:
+            - mysql
+
+    maildev:
+        image: djfarrelly/maildev
+        container_name: sortir.com_maildev
+        ports:
+          - 8001:80
+
+volumes:
+  db-data: {}

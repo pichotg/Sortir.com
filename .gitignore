@@ -22,12 +22,10 @@
 ###< PHPStorm ###
 
 ###> docker ###
-.docker/*
-docker-compose.yml
+.docker/data/*
 ###< docker ###
 
-symfony.lock
-composer.lock
+###> Custom ###
 /public/.htaccess
 /public/files/photo/
-/.docker/
+###< Custom ###
