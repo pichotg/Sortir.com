@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Inscriptions;
 use App\Entity\Lieux;
 use App\Entity\Sorties;
+use App\Form\AnnulerSortieType;
 use App\Form\FilterType;
 use App\Form\SortiesType;
 use App\Repository\SortiesRepository;
@@ -171,6 +172,43 @@ class SortiesController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'Inscription successfully remove !');
         return $this->redirectToRoute('sorties');
+    }
+
+    /**
+     * @Route("/sorties/annuler/{id}", name="annuler_sortie")
+     */
+    public function annuler_sortie(Request $request, EntityManagerInterface $em, Sorties $sortie){
+
+        $participant = $this->getUser();
+
+        $form = $this->createForm(AnnulerSortieType::class, $sortie);
+        dump($request);
+        $form->handleRequest($request);
+
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            dump($form['descriptioninfos']->getData());
+            $sortie->setDescriptioninfos($form['descriptioninfos']->getData());
+            $sortie->setEtatsortie("Annulée");
+
+            $em->flush();
+            $this->addFlash('success', 'Sortie successfully canceled !');
+
+            $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();
+
+            return $this->redirectToRoute('sorties');
+
+        }
+
+        $this->addFlash('success', 'Inscription successfully remove !');
+
+        return $this->render('sorties/annuler.html.twig', [
+            'page_name' => 'Annuler Sortie',
+            'sortie' => $sortie,
+            'participants' => $participant,
+            'form' => $form->createView()
+        ]);
     }
 
 }

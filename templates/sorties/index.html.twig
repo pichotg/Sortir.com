@@ -78,6 +78,7 @@
 
                                 {% if app.user == sortie.organisateur %}
                                     <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                    <a href="{{ path('annuler_sortie', {'id': sortie.id}) }}" class="btn btn-danger"><i class="far fa-window-close"></i></a>
                                 {% endif %}
 
 
