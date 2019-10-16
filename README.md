@@ -41,5 +41,5 @@ php bin/console doctrine:schema:update --force
 
 Mettre en place le jeu de données :
 ```bash
-php bin/console doctrine:fxitures:load
+php bin/console doctrine:fixtures:load
 ```
