@@ -6,6 +6,7 @@ use App\Entity\Villes;
 use App\Form\VillesType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -40,12 +41,12 @@ class VillesController extends AbstractController
             $ville = $form->getData();
             $em->persist($ville);
             $em->flush();
-            $this->addFlash('success', 'Villes successfully added !');
+            $this->addFlash('success', 'La ville a bien été ajoutée !');
             return $this->redirectToRoute('villes');
         }
 
         return $this->render('villes/add.html.twig', [
-            'page_name' => 'Ville Add',
+            'page_name' => 'Ajout d\'une ville',
             'form' => $form->createView()
         ]);
     }
@@ -56,6 +57,13 @@ class VillesController extends AbstractController
     public function edit(Villes $ville, Request $request, EntityManagerInterface $em)
     {
         $form = $this->createForm(VillesType::class, $ville);
+        $form->remove('submit');
+        $form->add('submit',SubmitType::class, [
+            'label' => 'Modifier',
+            'attr' => [
+                'class' => 'btn btn-primary w-100'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -63,7 +71,7 @@ class VillesController extends AbstractController
 
             $em->persist($ville);
             $em->flush();
-            $this->addFlash('success', 'Ville successfully modified !');
+            $this->addFlash('success', 'La ville a bien été modifiée !');
 
             $this->villesListe = $em->getRepository(Villes::class)->findAll();
 
@@ -71,7 +79,7 @@ class VillesController extends AbstractController
         }
 
         return $this->render('villes/edit.html.twig', [
-            'page_name' => 'Ville Edit',
+            'page_name' => 'Modification de la ville',
             'ville' => $ville,
             'form' => $form->createView()
         ]);
@@ -86,7 +94,7 @@ class VillesController extends AbstractController
 
         $em->remove($ville);
         $em->flush();
-        $this->addFlash('success', 'Ville was deleted !');
+        $this->addFlash('success', 'La ville a été supprimée.');
 
         return $this->redirectToRoute('villes');
     }

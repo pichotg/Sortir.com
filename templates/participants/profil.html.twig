@@ -18,24 +18,23 @@
                 </li>
             </ul>
         </div>
-        <div class="card-body row">
+        <div class="card-body row justify-content-center">
             <div class="col-auto text-center">
                 {% if app.user.photo is not null %}
                     <img class="img-profile-2 rounded-circle" src="{{ asset('files/photo/' ~ app.user.photo) }}" alt="{{ app.user.username }}">
                 {% else %}
                     <i class="fas fa-user-circle fa-9x"></i>
                 {% endif %}
-                <h1>{{ app.user.nom }} {{ app.user.prenom }}</h1>
-                <p class="title">({{ app.user.pseudo }})</p>
-                <p>{{ app.user.mail }}</p>
+                <h1 class="d-block">{{ app.user.nom }} {{ app.user.prenom }}</h1>
+                <p class="title d-block">({{ app.user.pseudo }})</p>
                 {% if app.user.mail is not null %}
-                    <a href="#"><i class="fas fa-at"></i> {{ app.user.mail }}</a>
+                    <a href="#" class="d-block"><i class="fas fa-at"></i> {{ app.user.mail }}</a>
                 {% endif %}
                 {% if app.user.telephone is not null %}
-                    <a href="#"><i class="fas fa-phone"></i> {{ app.user.telephone }}</a>
+                    <a href="#" class="d-block"><i class="fas fa-phone"></i> {{ app.user.telephone }}</a>
                 {% endif %}
             </div>
-            <div class="col-8">
+            <div class="col-auto w-100">
             {% if edit %}
                 {% if form is not null %}
                     {{ form(form) }}
