@@ -139,7 +139,14 @@ class ParticipantsController extends AbstractController
 
         $formParticipant = $this->createForm(ParticipantsType::class);
         $formParticipant->remove('actif')
-                        ->remove('id');
+                        ->remove('id')
+                        ->remove('submit');
+        $formParticipant->add('submit',SubmitType::class, [
+            'label' => 'S\'inscrire !',
+            'attr' => [
+                'class' => 'btn btn-success w-100'
+            ]
+        ]);
 
         $formParticipant->handleRequest($request);
 
@@ -190,9 +197,16 @@ class ParticipantsController extends AbstractController
 
         $form = $this->createForm(ParticipantsType::class, $participant);
         $form->remove('motDePasse')
-             ->remove('campus')
-             ->remove('photo')
-             ->remove('actif');
+            ->remove('campus')
+            ->remove('photo')
+            ->remove('actif')
+            ->remove('submit');
+        $form->add('submit',SubmitType::class, [
+            'label' => 'Mettre à jour',
+            'attr' => [
+                'class' => 'btn btn-success w-100'
+            ]
+        ]);
 
         $form->handleRequest($request);
 
@@ -241,7 +255,14 @@ class ParticipantsController extends AbstractController
             ->remove('mail')
             ->remove('campus')
             ->remove('photo')
-            ->remove('actif');
+            ->remove('actif')
+            ->remove('submit');
+        $form->add('submit',SubmitType::class, [
+            'label' => 'Mettre à jour le mot de passe',
+            'attr' => [
+                'class' => 'btn btn-success w-100'
+            ]
+        ]);;
 
         $form->handleRequest($request);
 

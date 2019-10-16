@@ -6,6 +6,7 @@ use App\Entity\Campus;
 use App\Form\CampusType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,10 +21,8 @@ class CampusController extends AbstractController
     {
         $this->campusListe = $em->getRepository(Campus::class)->findAll();
 
-        dump($this->campusListe);
-
         return $this->render('campus/index.html.twig', [
-            'page_name' => 'campus',
+            'page_name' => 'Campus',
             'campus' => $this->campusListe
         ]);
     }
@@ -40,12 +39,12 @@ class CampusController extends AbstractController
             $campus = $form->getData();
             $em->persist($campus);
             $em->flush();
-            $this->addFlash('success', 'campus successfully added !');
+            $this->addFlash('success', 'Le campus a bien été ajouté !');
             return $this->redirectToRoute('campus');
         }
 
         return $this->render('campus/add.html.twig', [
-            'page_name' => 'campus Add',
+            'page_name' => 'Ajouter un campus',
             'form' => $form->createView()
         ]);
     }
@@ -56,6 +55,13 @@ class CampusController extends AbstractController
     public function edit(campus $campus, Request $request, EntityManagerInterface $em)
     {
         $form = $this->createForm(campusType::class, $campus);
+        $form->remove('submit');
+        $form->add('submit',SubmitType::class, [
+            'label' => 'Modifier',
+            'attr' => [
+                'class' => 'btn btn-primary w-100'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -63,7 +69,7 @@ class CampusController extends AbstractController
 
             $em->persist($campus);
             $em->flush();
-            $this->addFlash('success', 'campus successfully modified !');
+            $this->addFlash('success', 'Le campus a bien été modifé !');
 
             $this->campusListe = $em->getRepository(campus::class)->findAll();
 
@@ -71,7 +77,7 @@ class CampusController extends AbstractController
         }
 
         return $this->render('campus/edit.html.twig', [
-            'page_name' => 'campus Edit',
+            'page_name' => 'Modification du campus',
             'campus' => $campus,
             'form' => $form->createView()
         ]);
@@ -86,7 +92,7 @@ class CampusController extends AbstractController
 
         $em->remove($campus);
         $em->flush();
-        $this->addFlash('success', 'campus was deleted !');
+        $this->addFlash('success', 'Le campus a bien été supprimé.');
 
         return $this->redirectToRoute('campus');
     }

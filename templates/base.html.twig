@@ -22,7 +22,7 @@
 
 {% include 'elements/alert.html.twig' %}
 
-<main class="ml-4 mr-4 mt-4">
+<main class="m-4">
     {% block body %}{% endblock %}
 </main>
 
@@ -40,6 +40,7 @@
     <script src="{{ asset('js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.rowReorder.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/custom_dataTables.js') }}"></script>
     <script src="{{ asset('js/bs-custom-file-input.min.js') }}"></script>
 {% endblock %}
 </body>
