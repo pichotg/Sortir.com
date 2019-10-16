@@ -28,4 +28,7 @@
 ###> Custom ###
 /public/.htaccess
 /public/files/photo/
+composer.lock
+symfony.lock
+phpunit.xml.dist
 ###< Custom ###
