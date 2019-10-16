@@ -2,7 +2,7 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     encoders:
         App\Entity\Participants:
-            algorithm: argon2i
+            algorithm: auto
 
     providers:
         my_providers:
@@ -21,7 +21,6 @@ security:
                 login_path: security_login
                 check_path: security_login
                 default_target_path: home
-            logout_on_user_change: true
             logout:
                 path: security_logout
                 target: /
