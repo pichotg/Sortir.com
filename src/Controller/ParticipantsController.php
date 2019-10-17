@@ -9,6 +9,7 @@ use App\Form\ParticipantsType;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -421,11 +422,48 @@ class ParticipantsController extends AbstractController
     /**
      * @Route("/users/add", name="users_add")
      */
-    public function users_add(Request $request, EntityManagerInterface $em)
+    public function users_add(Request $request, EntityManagerInterface $em, FileUploader $fileUploader, UserPasswordEncoderInterface $encoder)
     {
-        return $this->render('participants/users.html.twig', [
-            'page_name' => 'Ajouter un utilisateur',
-            'form' => null
+        $user = new Participants();
+
+        $form = $this->createForm(ParticipantsType::class, $user);
+        $form->remove('id');
+        $form->add('role',ChoiceType::class, [
+            'label' => 'Role utilisateur',
+            "mapped" => false,
+            'choices'  => [
+                'utilisateur' => 'ROLE_USER',
+                'administrateur' => 'ROLE_ADMIN',
+            ],
+        ]);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $user = $form->getData();
+
+            $password = $encoder->encodePassword($user, $user->getPassword());
+            $user->setMotDePasse($password);
+            $role = $form['role']->getData();
+            $role =  array(0 => $role);
+            $user->setRoles($role);
+
+            $file = $user->getPhoto();
+            if($file){
+                $filename = $fileUploader->upload($file);
+                $user->setPhoto($filename);
+            }
+
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('success','New user');
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('participants/users.html.twig',[
+            'users' => null,
+            'page_name' => 'Gestion Utilisateurs',
+            'form'=>$form->createView(),
         ]);
     }
 
