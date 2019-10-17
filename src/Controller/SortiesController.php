@@ -202,12 +202,12 @@ class SortiesController extends AbstractController
             $this->addFlash('success', 'Sortie successfully canceled !');
 
             $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();
-
+            $this->addFlash('success', 'Inscription successfully remove !');
             return $this->redirectToRoute('sorties');
 
         }
 
-        $this->addFlash('success', 'Inscription successfully remove !');
+
 
         return $this->render('sorties/annuler.html.twig', [
             'page_name' => 'Annuler Sortie',

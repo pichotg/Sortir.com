@@ -78,7 +78,7 @@
 
                             <td scope="row" id="rowAction"><a href="{{ path('afficher_sortie', {'id': sortie.id}) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
 
-                                {% if app.user == sortie.organisateur %}
+                                {% if app.user == sortie.organisateur or app.user.pseudo == "admin"%}
                                     <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-warning"><i class="far fa-edit"></i></a>
                                     <a href="{{ path('annuler_sortie', {'id': sortie.id}) }}" class="btn btn-danger"><i class="far fa-window-close"></i></a>
                                 {% endif %}
