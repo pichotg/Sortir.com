@@ -6,12 +6,15 @@ use App\Entity\Inscriptions;
 use App\Entity\Lieux;
 use App\Entity\Participants;
 use App\Entity\Sorties;
+use App\Entity\Villes;
 use App\Form\AnnulerSortieType;
 use App\Form\FilterType;
+use App\Form\LieuxType;
 use App\Form\SortiesType;
 use App\Repository\SortiesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Constraints\Date;
@@ -67,9 +70,33 @@ class SortiesController extends AbstractController
     public function add(Request $request, EntityManagerInterface $em)
     {
         $sortie = new Sorties();
-
+        $lieux = new Lieux();
+        $formLieux = $this->createForm(LieuxType::class, $lieux);
+        $formLieux->handleRequest($request);
         $form = $this->createForm(SortiesType::class, $sortie);
         $form -> handleRequest($request);
+
+        $listVille = $em->getRepository(Villes::class)->findAll();
+
+
+        if($formLieux->isSubmitted() && $formLieux->isValid()){
+
+
+            $lieux = $formLieux->getData();
+            $sortie = $form->getData();
+            $formResend = $this->createForm(SortiesType::class, $sortie);
+            $formResend -> handleRequest($request);
+
+            $em->persist($lieux);
+            $em->flush();
+            $this->addFlash('success', 'Lieu successfully added !');
+
+
+
+        }
+
+
+
         if ($form->isSubmitted() && $form->isValid()) {
             $sortie = $form->getData();
             
@@ -97,7 +124,9 @@ class SortiesController extends AbstractController
 
         return $this->render('sorties/add.html.twig', [
             'page_name' => 'Sortie Add',
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'formLieux'=>$formLieux->createView(),
+            'listVilles'=>$listVille
         ]);
     }
 
