@@ -1,7 +1,7 @@
 $(document).ready( function () {
     moment.locale('fr');
     $('#sorties_datedebut').datetimepicker({
-        format: 'YYYY/MM/DD HH:mm:ss',
+        format: 'YYYY/MM/DD HH:mm',
         useCurrent: false,
         widgetPositioning : {
             horizontal: 'auto',
@@ -10,7 +10,10 @@ $(document).ready( function () {
         icons: {
             time: 'far fa-clock',
             date: 'far fa-calendar',
-        } 
+        },
+        minDate : {
+            moment : true
+        }
     });
     $('#sorties_datecloture').datetimepicker({
         format: 'YYYY/MM/DD',
@@ -22,7 +25,10 @@ $(document).ready( function () {
         icons: {
             time: 'far fa-clock',
             date: 'far fa-calendar',
-        } 
+        },
+        minDate : {
+            moment : true
+        }
     });
 
     $("#sorties_datecloture").on("change.datetimepicker", function (e) {
