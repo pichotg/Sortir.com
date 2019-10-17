@@ -190,9 +190,7 @@ class SortiesController extends AbstractController
         $participant = $this->getUser();
 
         $form = $this->createForm(AnnulerSortieType::class, $sortie);
-        dump($request);
         $form->handleRequest($request);
-
 
         if($form->isSubmitted() && $form->isValid()){
 
