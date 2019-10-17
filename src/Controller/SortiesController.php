@@ -27,6 +27,7 @@ class SortiesController extends AbstractController
     {
         $sortiesListe = null;
         $form = $this->createForm(FilterType::class);
+
         $form->handleRequest($request);
         $subscibed = null;
         $unsubscribed = null;
@@ -53,7 +54,7 @@ class SortiesController extends AbstractController
         return $this->render('sorties/index.html.twig', [
             'unsubscribed' => $unsubscribed,
             'subscibed' => $subscibed,
-            'controller_name' => 'SortiesController',
+            'app_name' => 'Evenements',
             'form' => $form->createView(),
             'sorties' => $this->sortiesListe,
             'page_name' => "Sorties"
@@ -138,7 +139,7 @@ class SortiesController extends AbstractController
         $sortieData = $this->sortiesListe = $em->getRepository(Sorties::class)->find($request->get('id'));
         $participants = $em->getRepository(Inscriptions::class)->findBy(['sortie'=>$request->get('id')]);
         return $this->render('sorties/afficher.html.twig', [
-            'page_name' => 'Afficher Sortie',
+            'page_name' => 'Information Sortie',
             'sortie' => $sortieData,
             'participants' => $participants
         ]);
