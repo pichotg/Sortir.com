@@ -31,7 +31,7 @@ class Sorties
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="datedebut", type="datetime", nullable=false)
+     * @ORM\Column(name="datedebut", type="datetime", nullable=true)
      */
     private $datedebut;
 
@@ -45,7 +45,7 @@ class Sorties
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="datecloture", type="datetime", nullable=false)
+     * @ORM\Column(name="datecloture", type="datetime", nullable=true)
      */
     private $datecloture;
 
@@ -66,7 +66,7 @@ class Sorties
     /**
      * @var String
      *
-     * @ORM\Column(name="etat", type="string", nullable=false, length=500, columnDefinition="enum('En création', 'En cours', 'Ouvert', 'Fermé')")
+     * @ORM\Column(name="etat", type="string", nullable=false, length=500, columnDefinition="enum('En création', 'En cours', 'Ouvert', 'Fermé', 'Annulée')")
      */
     private $etatsortie;
 

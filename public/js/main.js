@@ -46,4 +46,9 @@ $(document).ready( function () {
         $('#modalUser').modal("show");
     });
 
+    $('.datepicker').datepicker({
+        autoclose: true,
+        format: "yyyy/mm/dd",
+        language: "fr"
+    });
 } );

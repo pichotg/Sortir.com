@@ -14,6 +14,7 @@
                         {{ form_row(form.lieu) }}
                         {{ form_row(form.start) }}
                         {{ form_row(form.close) }}
+                       
                     </div>
                     <div class="col">
                         {{ form_row(form.ownorganisateur) }}
@@ -46,21 +47,22 @@
             <tbody>
 
             {% if sorties is defined and sorties is not empty %}
-
                 {% for sortie in sorties %}
                     {% set dateDebut = sortie.datedebut|date('Y-m-d') %}
                     {% set dateDifference = "now"|date('Y-m-d') %}
                     {% set dateEcart = date(dateDifference).diff(date(dateDebut))%}
                     {% if dateEcart.days >= 30 %}
                     {% else %}
-                        {% set inscrit = app.user and sortie in app.user.inscriptions ? true : false %}
+                        {% set inscrit = false %}
                         {% for inscription in app.user.inscriptions %}
                             {% for inscriptions in sortie.inscriptions %}
                                 {% if inscription == inscriptions %}
-                                    {% set inscrit= app.user %}
+                                    {% set inscrit = true %}
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
+                        {% if subscibed and inscrit == false %}
+                        {% else %}
                         <tr class="text-center">
                             <td scope="row">{{ sortie.nom }}</td>
                             <td scope="row">{{ sortie.datecloture|date('Y-m-d') }}</td>
@@ -78,6 +80,7 @@
 
                                 {% if app.user == sortie.organisateur %}
                                     <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-warning"><i class="far fa-edit"></i></a>
+                                    <a href="{{ path('annuler_sortie', {'id': sortie.id}) }}" class="btn btn-danger"><i class="far fa-window-close"></i></a>
                                 {% endif %}
 
 
@@ -92,6 +95,7 @@
 
                             </td>
                         </tr>
+                        {% endif %}
                         {% endif %}
 
                 {% endfor %}

@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Inscriptions;
 use App\Entity\Lieux;
+use App\Entity\Participants;
 use App\Entity\Sorties;
+use App\Form\AnnulerSortieType;
 use App\Form\FilterType;
 use App\Form\SortiesType;
 use App\Repository\SortiesRepository;
@@ -23,26 +25,34 @@ class SortiesController extends AbstractController
      */
     public function index(Request $request, SortiesRepository $sr, EntityManagerInterface $em)
     {
+        $sortiesListe = null;
         $form = $this->createForm(FilterType::class);
         $form->handleRequest($request);
+        $subscibed = null;
+        $unsubscribed = null;
         if ($form->isSubmitted() && $form->isValid()) {
 
             $lieu = $form['lieu']->getData();
 
+
             $start = $form['start']->getData();
             $close = $form['close']->getData();
+
             $ownorganisateur = $form['ownorganisateur']->getData();
+
             $subscibed = $form['subscibed']->getData();
             $unsubscribed = $form['unsubscribed']->getData();
             $passed = $form['passed']->getData();
-
-            $this->sortiesListe = $sr->findAllFilter($this->getUser(), $lieu,$ownorganisateur , $start, $close, $subscibed, $unsubscribed, $passed);
+            $participant = $em->getRepository(Participants::class)->find($this->getUser()->getId());
+            $this->sortiesListe = $sr->findAllFilter($participant, $lieu,$ownorganisateur , $start, $close, $passed);
         }else{
             $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();
         }
-
+        // dump( $this->sortiesListe);
 
         return $this->render('sorties/index.html.twig', [
+            'unsubscribed' => $unsubscribed,
+            'subscibed' => $subscibed,
             'controller_name' => 'SortiesController',
             'form' => $form->createView(),
             'sorties' => $this->sortiesListe,
@@ -137,13 +147,10 @@ class SortiesController extends AbstractController
     /**
      * @Route("/sorties/addParticipant/{id}", name="add_participant_sortie")
      */
-    public function add_participant(EntityManagerInterface $em, Request $request){
+    public function add_participant(EntityManagerInterface $em, Request $request, Sorties $sortie){
 
-
-        $sortie = $em->getRepository(Sorties::class)->find($request->get('id'));
-        dump($sortie);
+        $participant = $em->getRepository(Participants::class)->find($this->getUser()->getId());
         $inscription = new Inscriptions();
-        $participant = $this->getUser();
         $inscription->setDateInscription(new \DateTime());
         $inscription->setSortie($sortie);
         $inscription->setParticipant($participant);
@@ -171,6 +178,43 @@ class SortiesController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'Inscription successfully remove !');
         return $this->redirectToRoute('sorties');
+    }
+
+    /**
+     * @Route("/sorties/annuler/{id}", name="annuler_sortie")
+     */
+    public function annuler_sortie(Request $request, EntityManagerInterface $em, Sorties $sortie){
+
+        $participant = $this->getUser();
+
+        $form = $this->createForm(AnnulerSortieType::class, $sortie);
+        dump($request);
+        $form->handleRequest($request);
+
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            dump($form['descriptioninfos']->getData());
+            $sortie->setDescriptioninfos($form['descriptioninfos']->getData());
+            $sortie->setEtatsortie("Annulée");
+
+            $em->flush();
+            $this->addFlash('success', 'Sortie successfully canceled !');
+
+            $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();
+
+            return $this->redirectToRoute('sorties');
+
+        }
+
+        $this->addFlash('success', 'Inscription successfully remove !');
+
+        return $this->render('sorties/annuler.html.twig', [
+            'page_name' => 'Annuler Sortie',
+            'sortie' => $sortie,
+            'participants' => $participant,
+            'form' => $form->createView()
+        ]);
     }
 
 }
