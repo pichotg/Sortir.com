@@ -2,18 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Campus;
 use App\Entity\Participants;
+use App\Form\FilesType;
 use App\Form\ParticipantsType;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use function Sodium\add;
 
 class ParticipantsController extends AbstractController
 {
@@ -134,7 +134,7 @@ class ParticipantsController extends AbstractController
     /**
      * @Route("/participants/add", name="add_participants")
      */
-    public function addParticipants(Request $request,UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em){
+    public function addParticipants(Request $request,UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, FileUploader $fileUploader){
         $participant = new Participants();
 
         $formParticipant = $this->createForm(ParticipantsType::class);
@@ -159,7 +159,11 @@ class ParticipantsController extends AbstractController
             $participant->setRoles(['ROLE_USER']);
             $participant->setActif(1);
 
-            $participant = $this->uploadFile($formParticipant['photo']->getData(), $participant);
+            $file = $formParticipant['photo']->getData();
+            if($file){
+                $filename = $fileUploader->upload($file);
+                $participant->setPhoto($filename);
+            }
 
             $em->persist($participant);
             $em->flush();
@@ -353,26 +357,76 @@ class ParticipantsController extends AbstractController
         return $this->redirectToRoute('users');
     }
 
-    private function uploadFile($file, $user){
-        // Set User profile photo
-        if($file){
-            $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            // this is needed to safely include the file name as part of the URL
-            $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-            $newFilename = 'profil' . '-' . uniqid() . '.' . $file->guessExtension();
+    /**
+     * @Route("/users/import", name="import_user")
+     */
+    public function import_user(Request $request, EntityManagerInterface $em, FileUploader $fileUploader, UserPasswordEncoderInterface $encoder)
+    {
+        $form = $this->createForm(FilesType::class);
+        $form->handleRequest($request);
 
-            // Move the file to the directory where brochures are stored
-            try {
-                $file->move(
-                    '../public/files/photo',
-                    $newFilename
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
+        if($form->isSubmitted() && $form->isValid()){
+            $file = $form['file']->getData();
+            if($file){
+                $file = fopen($file, 'r');
+                $data = [];
+
+                while (($line = fgetcsv($file)) !== FALSE) {
+                    array_push($data, $line[0]);
+                }
+                fclose($file);
+
+                foreach ($data as $line){
+                    $splited_line = explode(";",$line);
+                    $splited_line[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $splited_line[0]);
+                    if($splited_line[0] != 'pseudo'){
+                        $user = new Participants();
+                        $user->setPseudo($splited_line[0]);
+                        $user->setNom($splited_line[1]);
+                        $user->setPrenom($splited_line[2]);
+                        $user->setTelephone($splited_line[3]);
+                        $user->setMail($splited_line[4]);
+
+                        $campus = $em->getRepository(Campus::class)->findOneBynomCampus($splited_line[5]);
+                        if(is_null($campus)){
+                            $campus = new Campus();
+                            $campus->setNomCampus($splited_line[5]);
+                            $em->persist($campus);
+                        }
+                        $user->setCampus($campus);
+
+                        $encoded_password = $encoder->encodePassword($user, $splited_line[6]);
+                        $user->setMotDePasse($encoded_password);
+
+                        $user->setActif(true);
+
+                        $em->persist($user);
+                    }
+                }
+
+                $em->flush();
+                $this->addFlash('success', 'L\'import c\'est biend déroulé !');
+
+            } else {
+                $this->addFlash('danger', 'Le fichier n\'a pas pu être ouvert.');
             }
-            $user->setPhoto($newFilename);
         }
-        return $user;
+
+        return $this->render('participants/users.html.twig', [
+            'page_name' => 'Import fichier CSV',
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/users/add", name="users_add")
+     */
+    public function users_add(Request $request, EntityManagerInterface $em)
+    {
+        return $this->render('participants/users.html.twig', [
+            'page_name' => 'Ajouter un utilisateur',
+            'form' => null
+        ]);
     }
 
     public function generateRandomString($length = 16, $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#@-_=$')

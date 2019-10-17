@@ -21,7 +21,7 @@
         <div class="card-body row justify-content-center">
             <div class="col-auto text-center">
                 {% if app.user.photo is not null %}
-                    <img class="img-profile-2 rounded-circle" src="{{ asset('files/photo/' ~ app.user.photo) }}" alt="{{ app.user.username }}">
+                    <img class="img-profile-2 rounded-circle" src="{{ asset('files/' ~ app.user.photo) }}" alt="{{ app.user.username }}">
                 {% else %}
                     <i class="fas fa-user-circle fa-9x"></i>
                 {% endif %}
