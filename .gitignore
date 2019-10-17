@@ -31,4 +31,6 @@
 composer.lock
 symfony.lock
 phpunit.xml.dist
+/public/files/
 ###< Custom ###
+
