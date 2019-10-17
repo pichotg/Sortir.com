@@ -7,6 +7,7 @@ use App\Entity\Lieux;
 use App\Entity\Sorties;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,7 +22,10 @@ class SortiesType extends AbstractType
     {
         $builder
             ->add('nom',TextType::class)
-            ->add('datedebut',DateType::class)
+            ->add('datedebut',DateTimeType::class,[
+                'required' => false,
+                'empty_data' => null
+            ])
             ->add('duree',IntegerType::class)
             ->add('datecloture',DateType::class)
             ->add('nbinscriptionsmax',IntegerType::class)
