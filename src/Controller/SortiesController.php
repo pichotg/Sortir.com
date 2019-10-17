@@ -74,7 +74,7 @@ class SortiesController extends AbstractController
             $sortie = $form->getData();
             
             $datedebut = $form['datedebut']->getData();
-            $sortie->setDatedebut(\DateTime::createFromFormat('Y/m/d H:i:s', $datedebut));
+            $sortie->setDatedebut(\DateTime::createFromFormat('Y/m/d H:i', $datedebut));
 
             $datecloture = $form['datecloture']->getData();
             $sortie->setDatecloture(\DateTime::createFromFormat('Y/m/d', $datecloture));
