@@ -30,14 +30,14 @@ class FilterType extends AbstractType
               'mapped' => false
           ])
           ->add('start',TextType::class,  [
-              'label'    => 'Date Entre',
+              'label'    => 'Date Evenement (début)',
               'attr' => ['class' => 'datepicker'],
               'required'      => false,
               'empty_data' => null,
               'mapped' => false
           ])
           ->add('close',TextType::class,  [
-              'label'    => 'et',
+              'label'    => 'Date Evenement (fin)',
               'attr' => ['class' => 'datepicker'],
               'required'      => false,
               'empty_data' => null,
@@ -67,7 +67,12 @@ class FilterType extends AbstractType
               'empty_data' => null,
               'mapped' => false
           ])
-          ->add('submit', SubmitType::class);
+          ->add('submit', SubmitType::class, [
+              'label' => 'Filtrer',
+              'attr' => [
+                  'class' => 'btn btn-success w-100'
+              ]
+          ]);
 
     }
 
