@@ -6,24 +6,7 @@
     <div class="jumbotron mt-2">
         <h1 class="text-center display-4 lead">{{ page_name }}</h1>
         {% if form is defined and form is not empty %}
-
-            {{ form_start(form) }}
-            {{ form_errors(form) }}
-            <div class="row">
-                <div class="col">
-                    {{ form_row(form.nom) }}
-                    {{ form_row(form.descriptioninfos) }}
-
-                </div>
-                <div class="col">
-
-                </div>
-                <div class="col">
-
-                </div>
-            </div>
-            {{ form_widget(form._token) }}
-            {{ form_end(form) }}
+            {{ form(form) }}
         {% endif %}
 
     </div>

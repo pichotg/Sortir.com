@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Sorties;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,9 +16,14 @@ class AnnulerSortieType extends AbstractType
     {
         $builder
             ->add('nom',TextType::class)
-            ->add('descriptioninfos',TextType::class)
-            ->add('Send', SubmitType::class,[
-                'label' =>'Enregistrer'
+            ->add('descriptioninfos',TextareaType::class, [
+                'label' => 'Description'
+            ])
+            ->add('submit', SubmitType::class,[
+                'label' =>'Annuler la sorite',
+                'attr' => [
+                    'class' => 'btn btn-danger w-100'
+                ]
             ])
         ;
     }

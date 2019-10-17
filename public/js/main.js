@@ -46,4 +46,6 @@ $(document).ready( function () {
         $('#modalUser').modal("show");
     });
 
+    $('[data-toggle="tooltip"]').tooltip()
+
 } );
