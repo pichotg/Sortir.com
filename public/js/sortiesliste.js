@@ -33,4 +33,12 @@ $(document).ready( function () {
     $("#filter_close").on("change.datetimepicker", function (e) {
         $('#filter_start').datetimepicker('maxDate', e.date);
     });
+
+    $("#cardfilterheader").click(function (){
+        $("#cardfilter").toggle();
+        $("#down").toggle();
+        $("#up").toggle();
+    })
+
+
 });
