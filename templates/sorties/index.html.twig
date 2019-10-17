@@ -34,12 +34,12 @@
             <thead class="thead-dark text-center">
             <tr>
                 <th scope="col">Nom</th>
-                <th scope="col">Cloture inscription</th>
                 <th scope="col">Début evenement</th>
-                <th scope="col">Durée</th>
+                <th scope="col">Cloture inscription</th>
                 <th scope="col">Inscrits/Places</th>
                 <th scope="col">Inscrits</th>
                 <th scope="col">Etat</th>
+                <th scope="col">Organisateur</th>
                 <th scope="col">Action</th>
 
             </tr>
@@ -65,9 +65,8 @@
                         {% else %}
                         <tr class="text-center">
                             <td scope="row">{{ sortie.nom }}</td>
+                            <td scope="row">{{ sortie.datedebut|date('Y-m-d H:i:s')}}</td>
                             <td scope="row">{{ sortie.datecloture|date('Y-m-d') }}</td>
-                            <td scope="row">{{ sortie.datedebut|date('Y-m-d')}}</td>
-                            <td scope="row">{{ sortie.duree }} min </td>
                             <td scope="row">{{ sortie.inscriptions|length }}/{{ sortie.nbinscriptionsmax }}</td>
                             <td scope="row" class="text-success">
                                 {% if inscrit %}
@@ -75,7 +74,8 @@
                                 {% endif %}
                             </td>
                             <td scope="row">{{ sortie.etatsortie }}</td>
-
+                            <td scope="row">{{ sortie.organisateur.prenom}} {{ sortie.organisateur.nom|slice(0, 1)}}.</td>
+                            
                             <td scope="row" id="rowAction"><a href="{{ path('afficher_sortie', {'id': sortie.id}) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
 
                                 {% if app.user == sortie.organisateur or app.user.pseudo == "admin"%}
