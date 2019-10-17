@@ -52,7 +52,6 @@ class SortiesController extends AbstractController
         }else{
             $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();
         }
-        // dump( $this->sortiesListe);
 
         return $this->render('sorties/index.html.twig', [
             'unsubscribed' => $unsubscribed,
@@ -78,10 +77,7 @@ class SortiesController extends AbstractController
 
         $listVille = $em->getRepository(Villes::class)->findAll();
 
-
         if($formLieux->isSubmitted() && $formLieux->isValid()){
-
-
             $lieux = $formLieux->getData();
             $sortie = $form->getData();
             $formResend = $this->createForm(SortiesType::class, $sortie);
@@ -89,13 +85,9 @@ class SortiesController extends AbstractController
 
             $em->persist($lieux);
             $em->flush();
-            $this->addFlash('success', 'Lieu successfully added !');
-
-
+            $this->addFlash('success', 'Le lieu a été ajouté !');
 
         }
-
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sortie = $form->getData();
@@ -106,9 +98,9 @@ class SortiesController extends AbstractController
             $datecloture = $form['datecloture']->getData();
             $sortie->setDatecloture(\DateTime::createFromFormat('Y/m/d', $datecloture));
 
-            if( $form->get('Send')->isClicked()){
+            if( $form->get('save')->isClicked()){
                 $sortie->setEtatSortie("En création");
-            }elseif( $form->get('Publish')->isClicked()){
+            }elseif( $form->get('publish')->isClicked()){
                 $sortie->setEtatSortie("Ouvert");
             }else{
                 return $this->redirectToRoute('sorties');
@@ -118,7 +110,7 @@ class SortiesController extends AbstractController
 
             $em->persist($sortie);
             $em->flush();
-            $this->addFlash('success', 'Sortie successfully added !');
+            $this->addFlash('success', 'La sortie a été ajoutée !');
             return $this->redirectToRoute('sorties');
         }
 
@@ -129,7 +121,6 @@ class SortiesController extends AbstractController
             'listVilles'=>$listVille
         ]);
     }
-
 
     /**
      * @Route("/sorties/edit/{id}", name="edit_sortie")
@@ -142,9 +133,9 @@ class SortiesController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $sortie = $form->getData();
 
-            if( $form->get('Send')->isClicked()){
+            if( $form->get('save')->isClicked()){
                 $sortie->setEtatSortie("En création");
-            }elseif( $form->get('Publish')->isClicked()){
+            }elseif( $form->get('publish')->isClicked()){
                 $sortie->setEtatSortie("Ouvert");
             }else{
                 return $this->redirectToRoute('sorties');
@@ -152,7 +143,7 @@ class SortiesController extends AbstractController
 
             $em->persist($sortie);
             $em->flush();
-            $this->addFlash('success', 'Sortie successfully modified !');
+            $this->addFlash('success', 'La sortie a été modifiée !');
 
             $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();
 
@@ -174,7 +165,6 @@ class SortiesController extends AbstractController
     {
         $sortieData = $this->sortiesListe = $em->getRepository(Sorties::class)->find($request->get('id'));
         $participants = $em->getRepository(Inscriptions::class)->findBy(['sortie'=>$request->get('id')]);
-        dump($sortieData);
         return $this->render('sorties/afficher.html.twig', [
             'page_name' => 'Description Sortie',
             'sortie' => $sortieData,
@@ -197,7 +187,7 @@ class SortiesController extends AbstractController
 
 
         $em->flush();
-        $this->addFlash('success', 'Inscription successfully done !');
+        $this->addFlash('success', 'L\'inscription a été faite !');
         return $this->redirectToRoute('sorties');
     }
 
@@ -214,7 +204,7 @@ class SortiesController extends AbstractController
         dump($inscription);
         $em->remove($inscription[0]);
         $em->flush();
-        $this->addFlash('success', 'Inscription successfully remove !');
+        $this->addFlash('success', 'L\'inscription a été retirée !');
         return $this->redirectToRoute('sorties');
     }
 
@@ -235,10 +225,10 @@ class SortiesController extends AbstractController
             $sortie->setEtatsortie("Annulée");
 
             $em->flush();
-            $this->addFlash('success', 'Sortie successfully canceled !');
+            $this->addFlash('success', 'La sortie a été annulée !');
 
             $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();
-            $this->addFlash('success', 'Inscription successfully remove !');
+            $this->addFlash('success', 'L\'inscription a été annulée !');
             return $this->redirectToRoute('sorties');
 
         }

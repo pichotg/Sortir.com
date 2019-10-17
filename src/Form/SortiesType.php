@@ -43,8 +43,12 @@ class SortiesType extends AbstractType
                 'required'      => true,
                 'mapped' => false
             ])
-            ->add('nbinscriptionsmax',IntegerType::class)
-            ->add('descriptioninfos',TextType::class)
+            ->add('nbinscriptionsmax',IntegerType::class, [
+                'label' => 'Nombre d\'inscription maximum'
+            ])
+            ->add('descriptioninfos',TextType::class, [
+                'label' => 'Description'
+            ])
             ->add('lieu',EntityType::class, [
                 'class' => Lieux::class,
                 'choice_label' => 'nom_lieu',
@@ -59,14 +63,23 @@ class SortiesType extends AbstractType
                     return $repository->createQueryBuilder('c')->orderBy('c.nomCampus', 'ASC');
                 }
             ])
-            ->add('Send', SubmitType::class,[
-                'label' =>'Enregistrer'
+            ->add('save', SubmitType::class,[
+                'label' =>'Enregistrer',
+                'attr' => [
+                    'class' => 'btn btn-success w-100'
+                ]
             ])
-            ->add('Publish', SubmitType::class,[
-                'label' =>'Publier'
+            ->add('publish', SubmitType::class,[
+                'label' =>'Publier',
+                'attr' => [
+                    'class' => 'btn btn-primary w-100'
+                ]
             ])
-            ->add('Cancel', SubmitType::class,[
-                'label' =>'Annuler'
+            ->add('cancel', SubmitType::class,[
+                'label' =>'Annuler',
+                'attr' => [
+                    'class' => 'btn btn-danger w-100'
+                ]
             ])
         ;
     }

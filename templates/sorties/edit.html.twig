@@ -5,11 +5,6 @@
 {% block body %}
     <div class="jumbotron mt-2">
         <h1 class="text-center display-4 lead">{{ page_name }}</h1>
-        {{ form_start(form) }}
-
-        {{ form_errors(form) }}
-
-        {{ form_end(form) }}
-
+        {{ form(form) }}
     </div>
 {% endblock %}

@@ -94,7 +94,29 @@
                                     <i class="fas fa-check-circle"></i>
                                 {% endif %}
                             </td>
-                            <td scope="row">{{ sortie.etatsortie }}</td>
+                            <td scope="row">
+                                {% if sortie.etatsortie == 'En création' %}
+                                    <span class="btn" data-toggle="tooltip" data-placement="top" title="En création">
+                                        <i class="fas fa-tools text-danger"></i>
+                                    </span>
+                                {% elseif sortie.etatsortie == 'En cours' %}
+                                    <span class="btn" data-toggle="tooltip" data-placement="top" title="En cours">
+                                        <i class="fas fa-pause-circle text-warning"></i>
+                                    </span>
+                                {% elseif sortie.etatsortie == 'Ouvert' %}
+                                    <span class="btn" data-toggle="tooltip" data-placement="top" title="Ouvert">
+                                        <i class="fas fa-check-circle text-success"></i>
+                                    </span>
+                                {% elseif sortie.etatsortie == 'Fermée'%}
+                                    <span class="btn" data-toggle="tooltip" data-placement="top" title="Fermée">
+                                        <i class="fas fa-times-circle text-danger"></i>
+                                    </span>
+                                {% elseif sortie.etatsortie == 'Annulée' %}
+                                    <span class="btn" data-toggle="tooltip" data-placement="top" title="Annulée">
+                                        <i class="fas fa-times-circle text-danger"></i>
+                                    </span>
+                                {% endif %}
+                            </td>
                             <td scope="row">{{ sortie.organisateur.prenom}} {{ sortie.organisateur.nom|slice(0, 1)}}.</td>
 
                             <td scope="row" id="rowAction">
