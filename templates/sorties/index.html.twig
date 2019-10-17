@@ -99,20 +99,17 @@
 
                             <td scope="row" id="rowAction">
                                 <div class="btn-group">
-                                    <a href="{{ path('afficher_sortie', {'id': sortie.id}) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
+                                    <a href="{{ path('afficher_sortie', {'id': sortie.id}) }}" class="btn btn-outline-info" data-toggle="tooltip" data-placement="top" title="Information"><i class="fas fa-info-circle"></i></a>
 
                                     {% if app.user == sortie.organisateur or app.user.pseudo == "admin"%}
-                                        <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-warning"><i class="far fa-edit"></i></a>
-                                        <a href="{{ path('annuler_sortie', {'id': sortie.id}) }}" class="btn btn-danger"><i class="far fa-window-close"></i></a>
+                                        <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Modifier"><i class="far fa-edit"></i></a>
+                                        <a href="{{ path('annuler_sortie', {'id': sortie.id}) }}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Annuler"><i class="far fa-window-close"></i></a>
                                     {% endif %}
 
-
                                     {% if inscrit and sortie.datecloture|date('Y-m-d')>"now"|date('Y-m-d') %}
-                                        <a id="desister" href="{{ path('remove_participant_sortie', {'id': sortie.id}) }}" class="btn btn-danger">Se désister <i class="fas fa-sign-in-alt"></i></a>
-                                        <a id="inscrire" style="display:none" href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-success">S'inscrire <i class="fas fa-sign-in-alt"></i></a>
+                                        <a id="desister" href="{{ path('remove_participant_sortie', {'id': sortie.id}) }}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Se désister"><i class="fas fa-sign-out-alt"></i></a>
                                     {% elseif sortie.inscriptions|length != sortie.nbinscriptionsmax and sortie.datecloture|date('Y-m-d')>"now"|date('Y-m-d') and sortie.etatsortie == "Ouvert"%}
-                                        <a id="desister" style="display:none" href="{{ path('remove_participant_sortie', {'id': sortie.id}) }}" class="btn btn-danger">Se désister <i class="fas fa-sign-in-alt"></i></a>
-                                        <a id="inscrire" href="{{ path('add_participant_sortie', {'id': sortie.id}) }}" class="btn btn-success">S'inscrire <i class="fas fa-sign-in-alt"></i></a>
+                                        <a id="inscrire" href="{{ path('add_participant_sortie', {'id': sortie.id}) }}" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="S'inscrire"><i class="fas fa-sign-in-alt"></i></a>
                                     {% else %}
                                     {% endif %}
                                 </div>

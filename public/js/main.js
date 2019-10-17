@@ -51,4 +51,7 @@ $(document).ready( function () {
         format: "yyyy/mm/dd",
         language: "fr"
     });
+
+    $('[data-toggle="tooltip"]').tooltip()
+
 } );

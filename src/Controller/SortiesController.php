@@ -138,8 +138,9 @@ class SortiesController extends AbstractController
     {
         $sortieData = $this->sortiesListe = $em->getRepository(Sorties::class)->find($request->get('id'));
         $participants = $em->getRepository(Inscriptions::class)->findBy(['sortie'=>$request->get('id')]);
+        dump($sortieData);
         return $this->render('sorties/afficher.html.twig', [
-            'page_name' => 'Information Sortie',
+            'page_name' => 'Description Sortie',
             'sortie' => $sortieData,
             'participants' => $participants
         ]);
