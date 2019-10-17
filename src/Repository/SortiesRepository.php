@@ -6,11 +6,8 @@ namespace App\Repository;
 use App\Entity\Lieux;
 use App\Entity\Participants;
 use App\Entity\Sorties;
-use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use phpDocumentor\Reflection\Types\Boolean;
-use phpDocumentor\Reflection\Types\Integer;
 
 class SortiesRepository extends ServiceEntityRepository
 {
@@ -29,11 +26,10 @@ class SortiesRepository extends ServiceEntityRepository
         bool $ownorganisateur = false ,
         string $start = null,
         string $stop = null,
-        bool $subscibed = false,
-        bool $unsubscribed= false,
         bool $passed = false)
     {
         $qb = $this->createQueryBuilder('s');
+
         if ($formLieu != null){
             $qb ->andWhere('s.lieu = :lieu')
                 ->setParameter('lieu', $formLieu->getId());
@@ -59,8 +55,8 @@ class SortiesRepository extends ServiceEntityRepository
                 ->setParameter('organisateur', $loguser->getId());
         }
 
-
         $qb = $qb->getQuery();
+        dump($qb);
         return $qb->execute();
     }
 

@@ -23,9 +23,7 @@ class SortiesType extends AbstractType
             ->add('nom',TextType::class)
             ->add('datedebut',DateType::class)
             ->add('duree',IntegerType::class)
-            ->add('datecloture',DateType::class,[
-                'attr'=>['class' => 'datepicker'],
-            ])
+            ->add('datecloture',DateType::class)
             ->add('nbinscriptionsmax',IntegerType::class)
             ->add('descriptioninfos',TextType::class)
             ->add('lieu',EntityType::class, [

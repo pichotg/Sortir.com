@@ -47,21 +47,22 @@
             <tbody>
 
             {% if sorties is defined and sorties is not empty %}
-
                 {% for sortie in sorties %}
                     {% set dateDebut = sortie.datedebut|date('Y-m-d') %}
                     {% set dateDifference = "now"|date('Y-m-d') %}
                     {% set dateEcart = date(dateDifference).diff(date(dateDebut))%}
                     {% if dateEcart.days >= 30 %}
                     {% else %}
-                        {% set inscrit = app.user and sortie in app.user.inscriptions ? true : false %}
+                        {% set inscrit = false %}
                         {% for inscription in app.user.inscriptions %}
                             {% for inscriptions in sortie.inscriptions %}
                                 {% if inscription == inscriptions %}
-                                    {% set inscrit= app.user %}
+                                    {% set inscrit = true %}
                                 {% endif %}
                             {% endfor %}
                         {% endfor %}
+                        {% if subscibed and inscrit == false %}
+                        {% else %}
                         <tr class="text-center">
                             <td scope="row">{{ sortie.nom }}</td>
                             <td scope="row">{{ sortie.datecloture|date('Y-m-d') }}</td>
@@ -93,6 +94,7 @@
 
                             </td>
                         </tr>
+                        {% endif %}
                         {% endif %}
 
                 {% endfor %}
