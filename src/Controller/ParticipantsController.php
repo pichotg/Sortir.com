@@ -432,8 +432,8 @@ class ParticipantsController extends AbstractController
             'label' => 'Role utilisateur',
             "mapped" => false,
             'choices'  => [
-                'utilisateur' => 'ROLE_USER',
-                'administrateur' => 'ROLE_ADMIN',
+                'Utilisateur' => 'ROLE_USER',
+                'Administrateur' => 'ROLE_ADMIN',
             ],
         ]);
 
@@ -462,7 +462,7 @@ class ParticipantsController extends AbstractController
 
         return $this->render('participants/users.html.twig',[
             'users' => null,
-            'page_name' => 'Gestion Utilisateurs',
+            'page_name' => 'Ajouter un utilisateurs',
             'form'=>$form->createView(),
         ]);
     }
