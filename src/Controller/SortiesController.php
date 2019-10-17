@@ -26,7 +26,7 @@ class SortiesController extends AbstractController
     public function index(Request $request, SortiesRepository $sr, EntityManagerInterface $em)
     {
         $sortiesListe = null;
-        $form = $this->createForm(FilterType::class);
+        $form = $this->createForm(FilterType::class, null);
 
         $form->handleRequest($request);
         $subscibed = null;
@@ -72,6 +72,13 @@ class SortiesController extends AbstractController
         $form -> handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $sortie = $form->getData();
+            
+            $datedebut = $form['datedebut']->getData();
+            $sortie->setDatedebut(\DateTime::createFromFormat('Y/m/d H:i:s', $datedebut));
+
+            $datecloture = $form['datecloture']->getData();
+            $sortie->setDatecloture(\DateTime::createFromFormat('Y/m/d', $datecloture));
+
             if( $form->get('Send')->isClicked()){
                 $sortie->setEtatSortie("En création");
             }elseif( $form->get('Publish')->isClicked()){

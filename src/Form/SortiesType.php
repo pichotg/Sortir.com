@@ -22,12 +22,27 @@ class SortiesType extends AbstractType
     {
         $builder
             ->add('nom',TextType::class)
-            ->add('datedebut',DateTimeType::class,[
-                'required' => false,
-                'empty_data' => null
+            ->add('datedebut',TextType::class,[
+                'label'    => 'Date Evenement (début)',
+                'attr' => [
+                    'class' => 'form-control datetimepicker-input',
+                    'data-toggle'=>'datetimepicker',
+                    'data-target'=>'#sorties_datedebut'
+                  ],
+                'required'      => true,
+                'mapped' => false
             ])
             ->add('duree',IntegerType::class)
-            ->add('datecloture',DateType::class)
+            ->add('datecloture',TextType::class,[
+                'label'    => 'Date Cloture inscription',
+                'attr' => [
+                    'class' => 'form-control datetimepicker-input',
+                    'data-toggle'=>'datetimepicker',
+                    'data-target'=>'#sorties_datecloture'
+                  ],
+                'required'      => true,
+                'mapped' => false
+            ])
             ->add('nbinscriptionsmax',IntegerType::class)
             ->add('descriptioninfos',TextType::class)
             ->add('lieu',EntityType::class, [

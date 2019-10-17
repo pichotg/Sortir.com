@@ -31,14 +31,22 @@ class FilterType extends AbstractType
           ])
           ->add('start',TextType::class,  [
               'label'    => 'Date Evenement (début)',
-              'attr' => ['class' => 'datepicker'],
+              'attr' => [
+                  'class' => 'form-control datetimepicker-input',
+                  'data-toggle'=>'datetimepicker',
+                  'data-target'=>'#filter_start'
+                ],
               'required'      => false,
               'empty_data' => null,
               'mapped' => false
           ])
           ->add('close',TextType::class,  [
               'label'    => 'Date Evenement (fin)',
-              'attr' => ['class' => 'datepicker'],
+              'attr' => [
+                'class' => 'form-control datetimepicker-input',
+                'data-toggle'=>'datetimepicker',
+                'data-target'=>'#filter_close'
+              ],
               'required'      => false,
               'empty_data' => null,
               'mapped' => false
