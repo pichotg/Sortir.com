@@ -18,7 +18,7 @@
                     <h3>Filtrer
                         <i id="down" class="fas fa-caret-square-up" style="display: none;"></i>
                         <i id="up" class="fas fa-caret-square-down"></i>
-                    </h2>
+                    </h3>
                 </div>
                 <div class="card-body" id="cardfilter" style="display: none;">
                     {{ form_start(form) }}
@@ -80,36 +80,6 @@
             </thead>
             <tbody>
 
-                {% if sorties is defined and sorties is not empty %}
-                    {% for sortie in sorties %}
-                        {% set dateDebut = sortie.datedebut|date('Y-m-d') %}
-                        {% set dateDifference = "now"|date('Y-m-d') %}
-                        {% set dateEcart = date(dateDifference).diff(date(dateDebut))%}
-                        {% if dateEcart.days >= 30 %}
-                            {% else %}
-                                {% set inscrit = false %}
-                                {% for inscription in app.user.inscriptions %}
-                                    {% for inscriptions in sortie.inscriptions %}
-                                        {% if inscription == inscriptions %}
-                                            {% set inscrit = true %}
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endfor %}
-                                {% if subscibed and inscrit == false %}
-                                    {% else %}
-                                        <tr class="text-center">
-                                            <td scope="row">{{ sortie.nom }}</td>
-                                            <td scope="row">{{ sortie.datedebut|date('Y-m-d H:i:s')}}</td>
-                                            <td scope="row">{{ sortie.datecloture|date('Y-m-d') }}</td>
-                                            <td scope="row">{{ sortie.inscriptions|length }}/{{ sortie.nbinscriptionsmax }}</td>
-                                            <td scope="row" class="text-success">
-                                                {% if inscrit %}
-                                                    <i class="fas fa-check-circle"></i>
-                                                {% endif %}
-                                            </td>
-                                            <td scope="row">{{ sortie.etatsortie }}</td>
-                                            <td scope="row">{{ sortie.organisateur.prenom}}
-                                                {{ sortie.organisateur.nom|slice(0, 1)}}.</td>
             {% if sorties is defined and sorties is not empty %}
                 {% for sortie in sorties %}
                     {% set dateDebut = sortie.datedebut|date('Y-m-d') %}
@@ -158,6 +128,7 @@
                                     <span class="btn" data-toggle="tooltip" data-placement="top" title="Annulée">
                                         <i class="fas fa-times-circle text-danger"></i>
                                     </span>
+                                {% else %}
                                 {% endif %}
                             </td>
                             <td scope="row">{{ sortie.organisateur.prenom}} {{ sortie.organisateur.nom|slice(0, 1)}}.</td>
@@ -176,7 +147,7 @@
                                                         <a href="{{ path('annuler_sortie', {'id': sortie.id}) }}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Annuler">
                                                             <i class="far fa-window-close"></i>
                                                         </a>
-                                                            {% endif %}
+                                                        {% endif %}
                                                     {% endif %}
 
                                                     {% if inscrit and sortie.datecloture|date('Y-m-d')>"now"|date('Y-m-d') %}
@@ -187,7 +158,7 @@
                                                         <a id="inscrire" href="{{ path('add_participant_sortie', {'id': sortie.id}) }}" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="S'inscrire">
                                                             <i class="fas fa-sign-in-alt"></i>
                                                         </a>
-                                                        {% else %}
+                                                    {% else %}
                                                     {% endif %}
                                                 </div>
                                             </td>
