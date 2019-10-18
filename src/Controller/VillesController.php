@@ -21,8 +21,6 @@ class VillesController extends AbstractController
     {
         $this->villesListe = $em->getRepository(Villes::class)->findAll();
 
-        dump($this->villesListe);
-
         return $this->render('villes/index.html.twig', [
             'page_name' => 'Villes',
             'villes' => $this-> villesListe

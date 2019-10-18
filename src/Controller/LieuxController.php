@@ -21,8 +21,6 @@ class LieuxController extends AbstractController
     {
         $this->lieuxListe = $em->getRepository(Lieux::class)->findAll();
 
-        dump($this->lieuxListe);
-
         return $this->render('Lieux/index.html.twig', [
             'page_name' => 'Lieux',
             'lieux' => $this-> lieuxListe
