@@ -228,7 +228,7 @@ class SortiesController extends AbstractController
             $this->addFlash('success', 'La sortie a été annulée !');
 
             $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();
-            $this->addFlash('success', 'L\'inscription a été annulée !');
+
             return $this->redirectToRoute('sorties');
 
         }
