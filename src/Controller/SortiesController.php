@@ -195,13 +195,11 @@ class SortiesController extends AbstractController
      * @Route("/sorties/removeParticipant/{id}", name="remove_participant_sortie")
      */
     public function remove_participant(EntityManagerInterface $em, Request $request){
-        dump($request->get('id'));
         $participant = $this->getUser();
 
         $sortie = $em->getRepository(Sorties::class)->find($request->get('id'));
 
         $inscription = $em->getRepository(Inscriptions::class)->findBy(['sortie'=>$sortie->getId(), 'participant'=>$participant->getId()],['sortie'=>'ASC']);
-        dump($inscription);
         $em->remove($inscription[0]);
         $em->flush();
         $this->addFlash('success', 'L\'inscription a été retirée !');
@@ -220,7 +218,6 @@ class SortiesController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
-            dump($form['descriptioninfos']->getData());
             $sortie->setDescriptioninfos($form['descriptioninfos']->getData());
             $sortie->setEtatsortie("Annulée");
 

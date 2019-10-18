@@ -349,8 +349,9 @@ class ParticipantsController extends AbstractController
                 $em->flush();
 
                 $this->addFlash('success','L\'utilisateur ' . $user_pseudo . ' a été été mis à jour !');
+            } else {
+                $this->addFlash('danger','L\'utilisateur est l\'organisateur de un ou plusieurs événement.');
             }
-            $this->addFlash('danger','L\'utilisateur est l\'organisateur de un ou plusieurs événement.');
         } else {
             $this->addFlash('danger','Vous ne pouvez pas supprimer votre propre utilisateur.');
         }
