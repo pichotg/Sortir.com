@@ -50,6 +50,3 @@ services:
         container_name: sortir.com_maildev
         ports:
           - 8001:80
-
-volumes:
-  db-data: {}
