@@ -6,6 +6,7 @@ use App\Entity\Lieux;
 use App\Form\LieuxType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -40,12 +41,12 @@ class LieuxController extends AbstractController
             $lieu = $form->getData();
             $em->persist($lieu);
             $em->flush();
-            $this->addFlash('success', 'Lieux successfully added !');
+            $this->addFlash('success', 'Le lieu a été ajouté !');
             return $this->redirectToRoute('lieux');
         }
 
         return $this->render('Lieux/add.html.twig', [
-            'page_name' => 'lieu Add',
+            'page_name' => 'Ajouter un lieu',
             'form' => $form->createView()
         ]);
     }
@@ -56,6 +57,13 @@ class LieuxController extends AbstractController
     public function edit(Lieux $lieu, Request $request, EntityManagerInterface $em)
     {
         $form = $this->createForm(LieuxType::class, $lieu);
+        $form->remove('send');
+        $form->add('send',SubmitType::class, [
+            'label' => 'Modifier',
+            'attr' => [
+                'class' => 'btn btn-primary w-100'
+            ]
+        ]);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -63,7 +71,7 @@ class LieuxController extends AbstractController
 
             $em->persist($lieu);
             $em->flush();
-            $this->addFlash('success', 'lieu successfully modified !');
+            $this->addFlash('success', 'Le lieu a été modifié !');
 
             $this->lieuxListe = $em->getRepository(Lieux::class)->findAll();
 
@@ -71,7 +79,7 @@ class LieuxController extends AbstractController
         }
 
         return $this->render('lieux/edit.html.twig', [
-            'page_name' => 'lieu Edit',
+            'page_name' => 'Edition Lieu',
             'lieu' => $lieu,
             'form' => $form->createView()
         ]);
@@ -86,7 +94,7 @@ class LieuxController extends AbstractController
 
         $em->remove($lieu);
         $em->flush();
-        $this->addFlash('success', 'lieu was deleted !');
+        $this->addFlash('success', 'Le lieu a été supprimé !');
 
         return $this->redirectToRoute('lieux');
     }

@@ -17,7 +17,9 @@ class LieuxType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nomLieu', TextType::class)
+            ->add('nomLieu', TextType::class, [
+                'label' => 'Nom'
+            ])
             ->add('rue', TextType::class)
             ->add('latitude', TextType::class)
                 ->add('longitude', TextType::class)
@@ -28,7 +30,12 @@ class LieuxType extends AbstractType
                     return $repository->createQueryBuilder('c')->orderBy('c.nomVille', 'ASC');
                 }
             ])
-            ->add('Send',SubmitType::class)
+            ->add('send',SubmitType::class, [
+                'label' => 'Ajouter',
+                'attr' => [
+                    'class' => 'btn btn-primary w-100'
+                ]
+            ])
         ;
     }
 
