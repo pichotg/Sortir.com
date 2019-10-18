@@ -121,9 +121,11 @@
                                                         <a href="{{ path('edit_sortie', {'id': sortie.id}) }}" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="Modifier">
                                                             <i class="far fa-edit"></i>
                                                         </a>
+                                                        {% if sortie.etatsortie != "Annulée" %}
                                                         <a href="{{ path('annuler_sortie', {'id': sortie.id}) }}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Annuler">
                                                             <i class="far fa-window-close"></i>
                                                         </a>
+                                                            {% endif %}
                                                     {% endif %}
 
                                                     {% if inscrit and sortie.datecloture|date('Y-m-d')>"now"|date('Y-m-d') %}

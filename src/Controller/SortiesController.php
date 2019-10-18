@@ -238,7 +238,7 @@ class SortiesController extends AbstractController
             $this->addFlash('success', 'Sortie successfully canceled !');
 
             $this->sortiesListe = $em->getRepository(Sorties::class)->findAll();
-            $this->addFlash('success', 'Inscription successfully remove !');
+
             return $this->redirectToRoute('sorties');
 
         }
