@@ -3,7 +3,7 @@ $(document).ready( function () {
     // Need for input file generated with Form
     bsCustomFileInput.init();
 
-    $('#usersTable').on('click', 'tr', function () {
+    $('#usersTable').on('click', '#rowTable', function () {
         let id = $('td', this).eq(1).text();
         let pseudo = $('td', this).eq(2).text();
         let nom = $('td', this).eq(3).text();

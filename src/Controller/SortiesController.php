@@ -115,7 +115,7 @@ class SortiesController extends AbstractController
         }
 
         return $this->render('sorties/add.html.twig', [
-            'page_name' => 'Sortie Add',
+            'page_name' => 'Ajouter une sortie',
             'form' => $form->createView(),
             'formLieux'=>$formLieux->createView(),
             'listVilles'=>$listVille

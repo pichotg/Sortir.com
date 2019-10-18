@@ -1,8 +1,5 @@
 $(document).ready( function () {
     let villeTable = $('#villeTable').DataTable({
-        'rowReorder': {
-            'selector': 'td:nth-child(2)'
-        },
         columnDefs: [
             { responsivePriority: 1, targets: 1 },
             { responsivePriority: 2, targets: 3 }
@@ -44,9 +41,6 @@ $(document).ready( function () {
     });
 
     let campusTable = $('#campusTable').DataTable({
-        'rowReorder': {
-            'selector': 'td:nth-child(2)'
-        },
         columnDefs: [
             { responsivePriority: 1, targets: 1 },
             { responsivePriority: 2, targets: 3 }
@@ -88,9 +82,6 @@ $(document).ready( function () {
     });
 
     let usersTable = $('#usersTable').DataTable({
-        'rowReorder': {
-            'selector': 'td:nth-child(2)'
-        },
         columnDefs: [
             { responsivePriority: 1, targets: 2 },
             { responsivePriority: 2, targets: 8 }
@@ -132,9 +123,6 @@ $(document).ready( function () {
     });
 
     let sortieTable = $('#sortieTable').DataTable({
-        'rowReorder': {
-            'selector': 'td:nth-child(2)'
-        },
         columnDefs: [
             { responsivePriority: 1, targets: 0 },
             { responsivePriority: 2, targets: 7 }
@@ -176,9 +164,6 @@ $(document).ready( function () {
     });
 
     let lieuTable = $('#lieuTable').DataTable({
-        'rowReorder': {
-            'selector': 'td:nth-child(2)'
-        },
         columnDefs: [
             { responsivePriority: 1, targets: 1 },
             { responsivePriority: 2, targets: 6 }

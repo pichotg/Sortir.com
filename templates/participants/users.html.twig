@@ -37,7 +37,7 @@
                     </thead>
                     <tbody>
                     {% for user in users %}
-                        <tr class="text-center">
+                        <tr id="rowTable" class="text-center">
                             <td>
                                 {% if user.photo is not null %}
                                     <img class="img-profile rounded-circle" src="{{ asset('files/' ~ user.photo) }}">
